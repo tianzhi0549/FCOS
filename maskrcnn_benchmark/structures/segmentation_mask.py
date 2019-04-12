@@ -195,8 +195,7 @@ class PolygonInstance(object):
             polygons = valid_polygons
 
         elif isinstance(polygons, PolygonInstance):
-            polygons = polygons.polygons.copy()
-
+            polygons = [p.clone() for p in polygons.polygons]
         else:
             RuntimeError(
                 "Type of argument `polygons` is not allowed:%s" % (type(polygons))

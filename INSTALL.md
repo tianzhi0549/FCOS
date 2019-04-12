@@ -17,13 +17,13 @@
 # for that, check that `which conda`, `which pip` and `which python` points to the
 # right path. From a clean conda env, this is what you need to do
 
-conda create --name maskrcnn_benchmark
-conda activate maskrcnn_benchmark
+conda create --name FCOS
+conda activate FCOS
 
 # this installs the right pip and dependencies for the fresh python
 conda install ipython
 
-# maskrcnn_benchmark and coco api dependencies
+# FCOS and coco api dependencies
 pip install ninja yacs cython matplotlib tqdm
 
 # follow PyTorch installation in https://pytorch.org/get-started/locally/
@@ -40,8 +40,8 @@ python setup.py build_ext install
 
 # install PyTorch Detection
 cd $INSTALL_DIR
-git clone https://github.com/facebookresearch/maskrcnn-benchmark.git
-cd maskrcnn-benchmark
+git clone https://github.com/tianzhi0549/FCOS.git
+cd FCOS
 
 # the following will install the lib with
 # symbolic links, so that you can modify
@@ -57,6 +57,7 @@ unset INSTALL_DIR
 ```
 
 ### Option 2: Docker Image (Requires CUDA, Linux only)
+*The following steps are for original maskrcnn-benchmark. Please change the repository name if needed.* 
 
 Build image with defaults (`CUDA=9.0`, `CUDNN=7`, `FORCE_CUDA=1`):
 

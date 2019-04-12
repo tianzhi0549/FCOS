@@ -23,6 +23,7 @@ _C = CN()
 _C.MODEL = CN()
 _C.MODEL.RPN_ONLY = False
 _C.MODEL.MASK_ON = False
+_C.MODEL.FCOS_ON = True
 _C.MODEL.RETINANET_ON = False
 _C.MODEL.KEYPOINT_ON = False
 _C.MODEL.DEVICE = "cuda"
@@ -41,6 +42,8 @@ _C.MODEL.WEIGHT = ""
 _C.INPUT = CN()
 # Size of the smallest side of the image during training
 _C.INPUT.MIN_SIZE_TRAIN = (800,)  # (800,)
+# The range of the smallest side for multi-scale training
+_C.INPUT.MIN_SIZE_RANGE_TRAIN = (-1, -1)  # -1 means disabled and it will use MIN_SIZE_TRAIN
 # Maximum size of the side of the image during training
 _C.INPUT.MAX_SIZE_TRAIN = 1333
 # Size of the smallest side of the image during testing
@@ -274,6 +277,24 @@ _C.MODEL.RESNETS.BACKBONE_OUT_CHANNELS = 256 * 4
 _C.MODEL.RESNETS.RES2_OUT_CHANNELS = 256
 _C.MODEL.RESNETS.STEM_OUT_CHANNELS = 64
 
+# ---------------------------------------------------------------------------- #
+# FCOS Options
+# ---------------------------------------------------------------------------- #
+_C.MODEL.FCOS = CN()
+_C.MODEL.FCOS.NUM_CLASSES = 81  # the number of classes including background
+_C.MODEL.FCOS.FPN_STRIDES = [8, 16, 32, 64, 128]
+_C.MODEL.FCOS.PRIOR_PROB = 0.01
+_C.MODEL.FCOS.INFERENCE_TH = 0.05
+_C.MODEL.FCOS.NMS_TH = 0.4
+_C.MODEL.FCOS.PRE_NMS_TOP_N = 1000
+
+# Focal loss parameter: alpha
+_C.MODEL.FCOS.LOSS_ALPHA = 0.25
+# Focal loss parameter: gamma
+_C.MODEL.FCOS.LOSS_GAMMA = 2.0
+
+# the number of convolutions used in the cls and bbox tower
+_C.MODEL.FCOS.NUM_CONVS = 4
 
 # ---------------------------------------------------------------------------- #
 # RetinaNet Options (Follow the Detectron version)
