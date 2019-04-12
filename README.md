@@ -1,6 +1,6 @@
 # FCOS: Fully Convolutional One-Stage Object Detection
 
-The codes are used for implementing FCOS for object detection, described in:
+This project hosts the code for implementing the FCOS algorithm for object detection, as presented in our paper:
 
     FCOS: Fully Convolutional One-Stage Object Detection,
     Tian, Zhi, Chunhua Shen, Hao Chen, and Tong He,
@@ -11,7 +11,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
 - **Memory-efficient:** FCOS uses 2x less training memory footprint than its anchor-based counterpart RetinaNet.
-- **Better performance:** Compared to RetinaNet, FCOS has better performance under exactly the same training and testing settings.
+- **Better performance:** Compared to RetinaNet, FCOS achieves better performance under exactly the same training and testing settings.
 - **State-of-the-art performance:** Without bells and whistles, FCOS achieves state-of-the-art performances.
 It achieves **41.0%** (ResNet-101-FPN) and **42.1%** (ResNeXt-32x8d-101) in AP on coco test-dev.
 - **Faster:** FCOS enjoys faster training and inference speed than RetinaNet.
@@ -22,7 +22,7 @@ But 4 1080Ti GPUs can also train a fully-fledged ResNet-50-FPN based FCOS since 
 
 ## Installation
 
-This FCOS implementation is based on [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark), so its installation is the same as original maskrcnn-benchmark.
+This FCOS implementation is based on [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark). Therefore the installation is the same as original maskrcnn-benchmark.
 
 Please check [INSTALL.md](INSTALL.md) for installation instructions.
 You may also want to see the original [README.md](MASKRCNN_README.md) of maskrcnn-benchmark.
@@ -36,9 +36,9 @@ The inference command line on coco minival split:
         TEST.IMS_PER_BATCH 4    
 
 Please note that:
-1) If your model has other name, please replace `models/FCOS_R_50_FPN_1x.pth` with the name.
+1) If your model's name is different, please replace `models/FCOS_R_50_FPN_1x.pth` with your own.
 2) If you enounter out-of-memory error, please try to reduce `TEST.IMS_PER_BATCH` to 1.
-3) If you want to evaluate another model, please change `--config-file` to its config file (in [configs/fcos](configs/fcos)) and `MODEL.WEIGHT` to its weights file.      
+3) If you want to evaluate a different model, please change `--config-file` to its config file (in [configs/fcos](configs/fcos)) and `MODEL.WEIGHT` to its weights file.      
 
 For your convenience, we provide the following trained models (more models are coming soon).
 
@@ -77,7 +77,7 @@ Note that:
 Any pull requests or issues are weclome.
 
 ## Citations
-Please consider citing our paper in your publications if the project helps your research. The following is a BibTeX reference.
+Please consider citing our paper in your publications if the project helps your research. BibTeX reference is as follows.
 ```
 @article{tian2019fcos,
   title={FCOS: Fully Convolutional One-Stage Object Detection},
