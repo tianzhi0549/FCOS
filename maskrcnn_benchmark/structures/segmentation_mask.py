@@ -67,7 +67,7 @@ class BinaryMaskList(object):
             masks = masks.masks.clone()
         else:
             RuntimeError(
-                "Type of `masks` argument could not be interpreted:%s" % tpye(masks)
+                "Type of `masks` argument could not be interpreted:%s" % type(masks)
             )
 
         if len(masks.shape) == 2:
