@@ -1,9 +1,14 @@
 #!/2019/04:15 18:00
 #!/2019/04:16 01:02
-#!/2019/04:16 21:02
+#!/2019/04:16 21:10
 
 ## A simple class FCOS, mainly to `inference_single_cvimage`.
-## 创建一个简单的类 FCOS，用于对单张图像进行推理，减少对 maskrcnn_benchmark 的依赖。
+"""
+## A simple class FCOS, mainly to `inference_single_cvimage`.
+cd FCOS/demo
+python inference_single_cvimage.py
+python inference_single_cvimage.py --config-file ../configs/fcos/fcos_R_50_FPN_1x.yaml --weight-file ../models/FCOS_R_50_FPN_1x.pth
+"""
 
 import os, sys
 curdir = os.path.dirname(os.path.abspath(__file__))
