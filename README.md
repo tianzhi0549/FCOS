@@ -14,7 +14,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 - **Better performance:** Compared to RetinaNet, FCOS achieves better performance under exactly the same training and testing settings.
 - **State-of-the-art performance:** Without bells and whistles, FCOS achieves state-of-the-art performances.
 It achieves **41.0%** (ResNet-101-FPN) and **42.1%** (ResNeXt-32x8d-101) in AP on coco test-dev.
-- **Faster:** FCOS enjoys faster training and inference speed than RetinaNet.
+- **Faster:** FCOS enjoys faster training and inference speed than RetinaNet. With 8 Nvidia V100 GPUs, the training of ResNet-50-FPN based FCOS can be done within 7 hours.
 
 ## Required hardware
 We use 8 Nvidia V100 GPUs. \
@@ -38,7 +38,7 @@ The inference command line on coco minival split:
 Please note that:
 1) If your model's name is different, please replace `models/FCOS_R_50_FPN_1x.pth` with your own.
 2) If you enounter out-of-memory error, please try to reduce `TEST.IMS_PER_BATCH` to 1.
-3) If you want to evaluate a different model, please change `--config-file` to its config file (in [configs/fcos](configs/fcos)) and `MODEL.WEIGHT` to its weights file.      
+3) If you want to evaluate a different model, please change `--config-file` to its config file (in [configs/fcos](configs/fcos)) and `MODEL.WEIGHT` to its weights file.
 
 For your convenience, we provide the following trained models (more models are coming soon).
 
@@ -51,6 +51,7 @@ FCOS_X_101_32x8d_FPN_2x | 72.9 | Yes | 122ms | 42.0 | 42.1 | [download](https://
 [1] *1x means the model is trained for 90K iterations.* \
 [2] *2x means the model is trained for 180K iterations.* \
 [3] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*.
+[4] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..*
 
 ## Training
 
@@ -74,7 +75,7 @@ Note that:
 
 ## Contributing to the project
 
-Any pull requests or issues are weclome.
+Any pull requests or issues are welcome.
 
 ## Citations
 Please consider citing our paper in your publications if the project helps your research. BibTeX reference is as follows.
