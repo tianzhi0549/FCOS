@@ -50,7 +50,7 @@ FCOS_X_101_32x8d_FPN_2x | 72.9 | Yes | 122ms | 42.0 | 42.1 | [download](https://
 
 [1] *1x means the model is trained for 90K iterations.* \
 [2] *2x means the model is trained for 180K iterations.* \
-[3] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*.
+[3] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*. \
 [4] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..*
 
 ## Training
