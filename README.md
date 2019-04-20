@@ -14,7 +14,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 - **Better performance:** Compared to RetinaNet, FCOS achieves better performance under exactly the same training and testing settings.
 - **State-of-the-art performance:** Without bells and whistles, FCOS achieves state-of-the-art performances.
 It achieves **41.0%** (ResNet-101-FPN) and **42.1%** (ResNeXt-32x8d-101) in AP on coco test-dev.
-- **Faster:** FCOS enjoys faster training and inference speed than RetinaNet. With 8 Nvidia V100 GPUs, the training of ResNet-50-FPN based FCOS can be done within 7 hours.
+- **Faster:** FCOS enjoys faster training and inference speed than RetinaNet. For example, with 8 Nvidia V100 GPUs, the training of ResNet-50-FPN based FCOS can be done within 7 hours.
 
 ## Required hardware
 We use 8 Nvidia V100 GPUs. \
