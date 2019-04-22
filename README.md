@@ -83,10 +83,10 @@ Any pull requests or issues are welcome.
 Please consider citing our paper in your publications if the project helps your research. BibTeX reference is as follows.
 ```
 @article{tian2019fcos,
-  title={FCOS: Fully Convolutional One-Stage Object Detection},
-  author={Tian, Zhi and Shen, Chunhua and Chen, Hao and He, Tong},
-  journal={arXiv preprint arXiv:1904.01355},
-  year={2019}
+  title   =  {{FCOS}: Fully Convolutional One-Stage Object Detection},
+  author  =  {Tian, Zhi and Shen, Chunhua and Chen, Hao and He, Tong},
+  journal =  {arXiv preprint arXiv:1904.01355},
+  year    =  {2019}
 }
 ```
 
