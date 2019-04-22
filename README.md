@@ -11,10 +11,10 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
 - **Memory-efficient:** FCOS uses 2x less training memory footprint than its anchor-based counterpart RetinaNet.
-- **Better performance:** Compared to RetinaNet, FCOS achieves better performance under exactly the same training and testing settings.
+- **Better performance:** The very simple detector achieves better performance (37.1 vs. 36.8) than Faster R-CNN.
+- **Faster training and inference:** With the same hardwares, FCOS also requires less training hours (6.5h vs. 8.8h) and faster inference speed (71ms vs. 126 ms per im) than Faster R-CNN.
 - **State-of-the-art performance:** Without bells and whistles, FCOS achieves state-of-the-art performances.
-It achieves **41.0%** (ResNet-101-FPN) and **42.1%** (ResNeXt-32x8d-101) in AP on coco test-dev.
-- **Faster:** FCOS enjoys faster training and inference speed than RetinaNet. For example, with 8 Nvidia V100 GPUs, the training of ResNet-50-FPN based FCOS can be done within 7 hours.
+It achieves **41.5%** (ResNet-101-FPN) and **43.2%** (ResNeXt-64x4d-101) in AP on coco test-dev.
 
 ## Required hardware
 We use 8 Nvidia V100 GPUs. \
@@ -44,14 +44,16 @@ For your convenience, we provide the following trained models (more models are c
 
 Model | Total training mem (GB) | Multi-scale training | Testing time / im | AP (minival) | AP (test-dev) | Link
 --- |:---:|:---:|:---:|:---:|:--:|:---:
-FCOS_R_50_FPN_1x | 29.3 | No | 71ms | 36.6 | 37.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
-FCOS_R_101_FPN_2x | 44.1 | Yes | 74ms | 40.9 | 41.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/vjL3L0AW7vnhRTo/download)
-FCOS_X_101_32x8d_FPN_2x | 72.9 | Yes | 122ms | 42.0 | 42.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
+FCOS_R_50_FPN_1x | 29.3 | No | 71ms | 37.1 | 37.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
+FCOS_R_101_FPN_2x | 44.1 | Yes | 74ms | 41.4 | 41.5 | [download](https://cloudstor.aarnet.edu.au/plus/s/vjL3L0AW7vnhRTo/download)
+FCOS_X_101_32x8d_FPN_2x | 72.9 | Yes | 122ms | 42.5 | 42.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
+FCOS_X_101_64x4d_FPN_2x | 77.7 | Yes | 140ms | 43.0 | 43.2 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
 
 [1] *1x means the model is trained for 90K iterations.* \
 [2] *2x means the model is trained for 180K iterations.* \
 [3] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*. \
-[4] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..*
+[4] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
+[5] *Our results have been futher improved after our initial release. If you want to check out our original results, please checkout commit [f4fd589](https://github.com/tianzhi0549/FCOS/tree/f4fd58966f45e64608c00b072c801de7f86b4f3a)*.
 
 ## Training
 
@@ -81,10 +83,10 @@ Any pull requests or issues are welcome.
 Please consider citing our paper in your publications if the project helps your research. BibTeX reference is as follows.
 ```
 @article{tian2019fcos,
-  title   =  {{FCOS}: Fully Convolutional One-Stage Object Detection},
-  author  =  {Tian, Zhi and Shen, Chunhua and Chen, Hao and He, Tong},
-  journal =  {arXiv preprint arXiv:1904.01355},
-  year    =  {2019}
+  title={FCOS: Fully Convolutional One-Stage Object Detection},
+  author={Tian, Zhi and Shen, Chunhua and Chen, Hao and He, Tong},
+  journal={arXiv preprint arXiv:1904.01355},
+  year={2019}
 }
 ```
 
