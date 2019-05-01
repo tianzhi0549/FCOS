@@ -27,6 +27,14 @@ This FCOS implementation is based on [maskrcnn-benchmark](https://github.com/fac
 Please check [INSTALL.md](INSTALL.md) for installation instructions.
 You may also want to see the original [README.md](MASKRCNN_README.md) of maskrcnn-benchmark.
 
+## A quick demo
+Once the installation is done, you can follow the below steps to run a quick demo.
+    
+    # assume that you are under the root directory of this project
+    wget https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download -O FCOS_R_50_FPN_1x.pth
+    python demo/fcos_demo.py
+
+
 ## Inference
 The inference command line on coco minival split:
 

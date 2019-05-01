@@ -320,7 +320,39 @@ def evaluate_predictions_on_coco(
     coco_eval.evaluate()
     coco_eval.accumulate()
     coco_eval.summarize()
+
+    compute_thresholds_for_classes(coco_eval)
+
     return coco_eval
+
+
+def compute_thresholds_for_classes(coco_eval):
+    '''
+    The function is used to compute the thresholds corresponding to best f-measure.
+    The resulting thresholds are used in fcos_demo.py.
+    :param coco_eval:
+    :return:
+    '''
+    import numpy as np
+    # dimension of precision: [TxRxKxAxM]
+    precision = coco_eval.eval['precision']
+    # we compute thresholds with IOU being 0.5
+    precision = precision[0, :, :, 0, -1]
+    scores = coco_eval.eval['scores']
+    scores = scores[0, :, :, 0, -1]
+
+    recall = np.linspace(0, 1, num=precision.shape[0])
+    recall = recall[:, None]
+
+    f_measure = (2 * precision * recall) / (np.maximum(precision + recall, 1e-6))
+    max_f_measure = f_measure.max(axis=0)
+    max_f_measure_inds = f_measure.argmax(axis=0)
+    scores = scores[max_f_measure_inds, range(len(max_f_measure_inds))]
+
+    print "Maximum f-measures for classes:"
+    print list(max_f_measure)
+    print "Score thresholds for classes (used in demos for visualization purposes):"
+    print list(scores)
 
 
 class COCOResults(object):

@@ -100,7 +100,7 @@ class COCODemo(object):
     def __init__(
         self,
         cfg,
-        confidence_threshold=0.7,
+        confidence_thresholds_for_classes,
         show_mask_heatmaps=False,
         masks_per_dim=2,
         min_image_size=224,
@@ -125,7 +125,7 @@ class COCODemo(object):
         self.palette = torch.tensor([2 ** 25 - 1, 2 ** 15 - 1, 2 ** 21 - 1])
 
         self.cpu_device = torch.device("cpu")
-        self.confidence_threshold = confidence_threshold
+        self.confidence_thresholds_for_classes = torch.tensor(confidence_thresholds_for_classes)
         self.show_mask_heatmaps = show_mask_heatmaps
         self.masks_per_dim = masks_per_dim
 
@@ -236,7 +236,9 @@ class COCODemo(object):
                 the BoxList via `prediction.fields()`
         """
         scores = predictions.get_field("scores")
-        keep = torch.nonzero(scores > self.confidence_threshold).squeeze(1)
+        labels = predictions.get_field("labels")
+        thresholds = self.confidence_thresholds_for_classes[(labels - 1).long()]
+        keep = torch.nonzero(scores > thresholds).squeeze(1)
         predictions = predictions[keep]
         scores = predictions.get_field("scores")
         _, idx = scores.sort(0, descending=True)
@@ -268,7 +270,7 @@ class COCODemo(object):
             box = box.to(torch.int64)
             top_left, bottom_right = box[:2].tolist(), box[2:].tolist()
             image = cv2.rectangle(
-                image, tuple(top_left), tuple(bottom_right), tuple(color), 1
+                image, tuple(top_left), tuple(bottom_right), tuple(color), 2
             )
 
         return image
