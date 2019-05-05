@@ -9,10 +9,10 @@ def build_transforms(cfg, is_train=True):
         else:
             assert len(cfg.INPUT.MIN_SIZE_RANGE_TRAIN) == 2, \
                 "MIN_SIZE_RANGE_TRAIN must have two elements (lower bound, upper bound)"
-            min_size = range(
+            min_size = list(range(
                 cfg.INPUT.MIN_SIZE_RANGE_TRAIN[0],
                 cfg.INPUT.MIN_SIZE_RANGE_TRAIN[1] + 1
-            )
+            ))
         max_size = cfg.INPUT.MAX_SIZE_TRAIN
         flip_prob = 0.5  # cfg.INPUT.FLIP_PROB_TRAIN
     else:
