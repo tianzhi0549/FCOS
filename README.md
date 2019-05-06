@@ -2,8 +2,8 @@
 
 This project hosts the code for implementing the FCOS algorithm for object detection, as presented in our paper:
 
-    FCOS: Fully Convolutional One-Stage Object Detection；
-    Tian Zhi, Chunhua Shen, Hao Chen, and Tong He；
+    FCOS: Fully Convolutional One-Stage Object Detection;
+    Tian Zhi, Chunhua Shen, Hao Chen, and Tong He;
     arXiv preprint arXiv:1904.01355 (2019).
 
 The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv.org/abs/1904.01355). 
@@ -58,11 +58,10 @@ FCOS_R_101_FPN_2x | 44.1 | Yes | 74ms | 41.4 | 41.5 | [download](https://cloudst
 FCOS_X_101_32x8d_FPN_2x | 72.9 | Yes | 122ms | 42.5 | 42.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
 FCOS_X_101_64x4d_FPN_2x | 77.7 | Yes | 140ms | 43.0 | 43.2 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
 
-[1] *1x means the model is trained for 90K iterations.* \
-[2] *2x means the model is trained for 180K iterations.* \
-[3] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*. \
-[4] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
-[5] *Our results have been improved since our initial release. If you want to check out our original results, please checkout commit [f4fd589](https://github.com/tianzhi0549/FCOS/tree/f4fd58966f45e64608c00b072c801de7f86b4f3a)*.
+[1] *1x and 2x mean the model is trained for 90K and 180K iterations, respectively.* \
+[2] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*. \
+[3] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
+[4] *Our results have been improved since our initial release. If you want to check out our original results, please checkout commit [f4fd589](https://github.com/tianzhi0549/FCOS/tree/f4fd58966f45e64608c00b072c801de7f86b4f3a)*.
 
 ## Training
 
@@ -78,11 +77,11 @@ The following command line will train FCOS_R_50_FPN_1x on 8 GPUs with Synchronou
         OUTPUT_DIR training_dir/fcos_R_50_FPN_1x
         
 Note that:
- 
-1) If you want to use fewer GPUs, please reduce `--nproc_per_node`. The total batch size does not depends on `nproc_per_node`. If you want to change the total batch size, please change `SOLVER.IMS_PER_BATCH` in [configs/fcos/fcos_R_50_FPN_1x.yaml](configs/fcos/fcos_R_50_FPN_1x.yaml).
+1) If you want to use fewer GPUs, please change `--nproc_per_node` to the number of GPUs. No other settings need to be changed. The total batch size does not depends on `nproc_per_node`. If you want to change the total batch size, please change `SOLVER.IMS_PER_BATCH` in [configs/fcos/fcos_R_50_FPN_1x.yaml](configs/fcos/fcos_R_50_FPN_1x.yaml).
 2) The models will be saved into `OUTPUT_DIR`.
 3) If you want to train FCOS with other backbones, please change `--config-file`.
-4) Sometimes you may encounter a deadlock with 100% GPUs' usage, which might be a problem of NCCL. Please try `export NCCL_P2P_DISABLE=1` before running the training command line.
+4) We haved noted that training FCOS with 4 GPUs (4 images per GPU) can achieve slightly better performance than with 8 GPUs (2 images per GPU). We are working to find the reasons. But if you pursuit the best performance, we suggest you train your models with 4 GPUs as long as an out-of-memory error does not happen.
+5) Sometimes you may encounter a deadlock with 100% GPUs' usage, which might be a problem of NCCL. Please try `export NCCL_P2P_DISABLE=1` before running the training command line.
 
 ## Contributing to the project
 
