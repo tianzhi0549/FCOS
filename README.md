@@ -2,8 +2,8 @@
 
 This project hosts the code for implementing the FCOS algorithm for object detection, as presented in our paper:
 
-    FCOS: Fully Convolutional One-Stage Object Detection,
-    Tian, Zhi, Chunhua Shen, Hao Chen, and Tong He,
+    FCOS: Fully Convolutional One-Stage Object Detection；
+    Tian Zhi, Chunhua Shen, Hao Chen, and Tong He；
     arXiv preprint arXiv:1904.01355 (2019).
 
 The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv.org/abs/1904.01355). 
