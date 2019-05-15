@@ -82,7 +82,7 @@ Note that:
 3) If you want to train FCOS with other backbones, please change `--config-file`.
 4) We haved noted that training FCOS with 4 GPUs (4 images per GPU) can achieve slightly better performance than with 8 GPUs (2 images per GPU). We are working to find the reasons. But if you pursuit the best performance, we suggest you train your models with 4 GPUs as long as an out-of-memory error does not happen.
 5) Sometimes you may encounter a deadlock with 100% GPUs' usage, which might be a problem of NCCL. Please try `export NCCL_P2P_DISABLE=1` before running the training command line.
-
+6) The X-101-64x4d model pre-trained on ImageNet can be downloaded [here](https://cloudstor.aarnet.edu.au/plus/s/k3ys35075jmU1RP/download).
 ## Contributing to the project
 
 Any pull requests or issues are welcome.
