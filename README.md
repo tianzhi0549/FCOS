@@ -16,6 +16,10 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 - **State-of-the-art performance:** Without bells and whistles, FCOS achieves state-of-the-art performances.
 It achieves **41.5%** (ResNet-101-FPN) and **43.2%** (ResNeXt-64x4d-101) in AP on coco test-dev.
 
+## Updates
+### 17 May 2019
+   - FCOS has been implemented in [mmdetection](https://github.com/open-mmlab/mmdetection). Many thanks to [@yhcao6](https://github.com/yhcao6) and [@hellock](https://github.com/hellock).
+
 ## Required hardware
 We use 8 Nvidia V100 GPUs. \
 But 4 1080Ti GPUs can also train a fully-fledged ResNet-50-FPN based FCOS since FCOS is memory-efficient.  
