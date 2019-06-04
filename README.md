@@ -84,9 +84,8 @@ Note that:
 1) If you want to use fewer GPUs, please change `--nproc_per_node` to the number of GPUs. No other settings need to be changed. The total batch size does not depends on `nproc_per_node`. If you want to change the total batch size, please change `SOLVER.IMS_PER_BATCH` in [configs/fcos/fcos_R_50_FPN_1x.yaml](configs/fcos/fcos_R_50_FPN_1x.yaml).
 2) The models will be saved into `OUTPUT_DIR`.
 3) If you want to train FCOS with other backbones, please change `--config-file`.
-4) We haved noted that training FCOS with 4 GPUs (4 images per GPU) can achieve slightly better performance than with 8 GPUs (2 images per GPU). We are working to find the reasons. But if you pursuit the best performance, we suggest you train your models with 4 GPUs as long as an out-of-memory error does not happen.
-5) Sometimes you may encounter a deadlock with 100% GPUs' usage, which might be a problem of NCCL. Please try `export NCCL_P2P_DISABLE=1` before running the training command line.
-6) The link of ImageNet pre-training X-101-64x4d in the code is invalid. Please download the model [here](https://cloudstor.aarnet.edu.au/plus/s/k3ys35075jmU1RP/download).
+4) The link of ImageNet pre-training X-101-64x4d in the code is invalid. Please download the model [here](https://cloudstor.aarnet.edu.au/plus/s/k3ys35075jmU1RP/download).
+5) If you want to train FCOS on your own dataset, please follow this instruction [#54](https://github.com/tianzhi0549/FCOS/issues/54#issuecomment-497558687).
 ## Contributing to the project
 
 Any pull requests or issues are welcome.
