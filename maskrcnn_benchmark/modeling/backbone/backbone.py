@@ -7,6 +7,7 @@ from maskrcnn_benchmark.modeling import registry
 from maskrcnn_benchmark.modeling.make_layers import conv_with_kaiming_uniform
 from . import fpn as fpn_module
 from . import resnet
+from . import mobilenet
 
 
 @registry.BACKBONES.register("R-50-C4")
@@ -65,6 +66,29 @@ def build_resnet_fpn_p3p7_backbone(cfg):
             cfg.MODEL.FPN.USE_GN, cfg.MODEL.FPN.USE_RELU
         ),
         top_blocks=fpn_module.LastLevelP6P7(in_channels_p6p7, out_channels),
+    )
+    model = nn.Sequential(OrderedDict([("body", body), ("fpn", fpn)]))
+    model.out_channels = out_channels
+    return model
+
+
+@registry.BACKBONES.register("MNV2-FPN-RETINANET")
+def build_mnv2_fpn_backbone(cfg):
+    body = mobilenet.MobileNetV2(cfg)
+    in_channels_stage2 = body.return_features_num_channels
+    out_channels = cfg.MODEL.RESNETS.BACKBONE_OUT_CHANNELS
+    fpn = fpn_module.FPN(
+        in_channels_list=[
+            0,
+            in_channels_stage2[1],
+            in_channels_stage2[2],
+            in_channels_stage2[3],
+        ],
+        out_channels=out_channels,
+        conv_block=conv_with_kaiming_uniform(
+            cfg.MODEL.FPN.USE_GN, cfg.MODEL.FPN.USE_RELU
+        ),
+        top_blocks=fpn_module.LastLevelP6P7(out_channels, out_channels),
     )
     model = nn.Sequential(OrderedDict([("body", body), ("fpn", fpn)]))
     model.out_channels = out_channels

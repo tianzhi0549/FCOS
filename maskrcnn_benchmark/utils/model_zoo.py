@@ -40,7 +40,10 @@ def cache_url(url, model_dir=None, progress=True):
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
     parts = urlparse(url)
-    filename = os.path.basename(parts.path)
+    if parts.fragment != "":
+        filename = parts.fragment
+    else:
+        filename = os.path.basename(parts.path)
     if filename == "model_final.pkl":
         # workaround as pre-trained Caffe2 models from Detectron have all the same filename
         # so make the full path the filename by replacing / with _
