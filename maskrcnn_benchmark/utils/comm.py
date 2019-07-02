@@ -115,3 +115,7 @@ def reduce_dict(input_dict, average=True):
             values /= world_size
         reduced_dict = {k: v for k, v in zip(names, values)}
     return reduced_dict
+
+
+def is_pytorch_1_1_0_or_later():
+    return [int(_) for _ in torch.__version__.split(".")[:3]] >= [1, 1, 0]

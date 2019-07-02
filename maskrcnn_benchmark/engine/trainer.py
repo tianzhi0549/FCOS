@@ -6,7 +6,7 @@ import time
 import torch
 import torch.distributed as dist
 
-from maskrcnn_benchmark.utils.comm import get_world_size
+from maskrcnn_benchmark.utils.comm import get_world_size, is_pytorch_1_1_0_or_later
 from maskrcnn_benchmark.utils.metric_logger import MetricLogger
 
 
@@ -53,12 +53,15 @@ def do_train(
     model.train()
     start_training_time = time.time()
     end = time.time()
+    pytorch_1_1_0_or_later = is_pytorch_1_1_0_or_later()
     for iteration, (images, targets, _) in enumerate(data_loader, start_iter):
         data_time = time.time() - end
         iteration = iteration + 1
         arguments["iteration"] = iteration
 
-        scheduler.step()
+        # in pytorch >= 1.1.0, scheduler.step() should be run after optimizer.step()
+        if not pytorch_1_1_0_or_later:
+            scheduler.step()
 
         images = images.to(device)
         targets = [target.to(device) for target in targets]
@@ -75,6 +78,9 @@ def do_train(
         optimizer.zero_grad()
         losses.backward()
         optimizer.step()
+
+        if pytorch_1_1_0_or_later:
+            scheduler.step()
 
         batch_time = time.time() - end
         end = time.time()
