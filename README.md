@@ -57,6 +57,8 @@ For your convenience, we provide the following trained models (more models are c
 
 **ResNe(x)ts:**
 
+*All ResNe(x)t based models are trained with 16 images in a mini-batch and frozen batch normalizaiton (i.e., consistent with models in [maskrcnn_benchmark](https://github.com/facebookresearch/maskrcnn-benchmark)).*
+
 Model | Total training mem (GB) | Multi-scale training | Testing time / im | AP (minival) | AP (test-dev) | Link
 --- |:---:|:---:|:---:|:---:|:--:|:---:
 FCOS_R_50_FPN_1x | 29.3 | No | 71ms | 37.1 | 37.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
@@ -64,16 +66,14 @@ FCOS_R_101_FPN_2x | 44.1 | Yes | 74ms | 41.4 | 41.5 | [download](https://cloudst
 FCOS_X_101_32x8d_FPN_2x | 72.9 | Yes | 122ms | 42.5 | 42.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
 FCOS_X_101_64x4d_FPN_2x | 77.7 | Yes | 140ms | 43.0 | 43.2 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
 
-*All ResNe(x)t based models are trained with 16 images in a mini-batch and frozen batch normalizaiton (consistent with ).*
-
 **MobileNets:**
+
+*We update batch normalizaiton for MobileNet based models. If you want to use SyncBN, please install pytorch-nightly.*
 
 Model | Training batch size | Multi-scale training | Testing time / im | AP (minival) | Link
 --- |:---:|:---:|:---:|:---:|:---:
 FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 59ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
 FCOS_syncbn_bs32_MNV2_FPN_1x | 32 | No | 59ms | 33.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/OpJtCJLj104i2Yc/download)
-
-*We update batch normalizaiton for MobileNet based models. If you want to use SyncBN, please install pytorch-nightly.*
 
 [1] *1x and 2x mean the model is trained for 90K and 180K iterations, respectively.* \
 [2] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*. \
