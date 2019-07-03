@@ -70,8 +70,8 @@ FCOS_X_101_64x4d_FPN_2x | 77.7 | Yes | 140ms | 43.0 | 43.2 | [download](https://
 
 *We update batch normalization for MobileNet based models. If you want to use SyncBN, please install pytorch-nightly.*
 
-Model Training batch size | Multi-scale training | Testing time / im | AP (minival) | Link
---- |:---:|:---:|:---:|:---:
+Model | Training batch size | Multi-scale training | Testing time / im | AP (minival) | Link
+--- |:---:|:---:|:---:|:---:|:---:
 FCOS_syncbn_bs32_c128_MNV2_FPN_1x | 32 | No | 19ms | 30.9 | [download](https://cloudstor.aarnet.edu.au/plus/s/3GKwaxZhDSOlCZ0/download)
 FCOS_syncbn_bs32_MNV2_FPN_1x | 32 | No | 59ms | 33.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/OpJtCJLj104i2Yc/download)
 FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 59ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
