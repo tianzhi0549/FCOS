@@ -71,7 +71,7 @@ FCOS_X_101_64x4d_FPN_2x | 77.7 | Yes | 140ms | 43.0 | 43.2 | [download](https://
 
 **MobileNets:**
 
-*We update batch normalization for MobileNet based models. If you want to use SyncBN, please install pytorch-nightly.*
+*We update batch normalization for MobileNet based models. If you want to use SyncBN, please install pytorch 1.1 or later.*
 
 Model | Training batch size | Multi-scale training | Testing time / im | AP (minival) | Link
 --- |:---:|:---:|:---:|:---:|:---:
