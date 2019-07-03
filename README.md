@@ -70,16 +70,17 @@ FCOS_X_101_64x4d_FPN_2x | 77.7 | Yes | 140ms | 43.0 | 43.2 | [download](https://
 
 *We update batch normalizaiton for MobileNet based models. If you want to use SyncBN, please install pytorch-nightly.*
 
-Model | Training batch size | Multi-scale training | Testing time / im | AP (minival) | Link
---- |:---:|:---:|:---:|:---:|:---:
-FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 59ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
-FCOS_syncbn_bs32_MNV2_FPN_1x | 32 | No | 59ms | 33.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/OpJtCJLj104i2Yc/download)
+Model | Num Channels | Training batch size | Multi-scale training | Testing time / im | AP (minival) | Link
+--- |:---:|:---:|:---:|:---:|:---:|:---:
+FCOS_syncbn_bs32_c128_MNV2_FPN_1x | 128 | 32 | No | 19ms | 30.9 | [download](https://cloudstor.aarnet.edu.au/plus/s/3GKwaxZhDSOlCZ0/download)
+FCOS_syncbn_bs32_MNV2_FPN_1x | 256 | 32 | No | 59ms | 33.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/OpJtCJLj104i2Yc/download)
+FCOS_bn_bs16_MNV2_FPN_1x | 256 | 16 | No | 59ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
 
 [1] *1x and 2x mean the model is trained for 90K and 180K iterations, respectively.* \
 [2] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*. \
 [3] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
-[4] *Our results have been improved since our initial release. If you want to check out our original results, please checkout commit [f4fd589](https://github.com/tianzhi0549/FCOS/tree/f4fd58966f45e64608c00b072c801de7f86b4f3a)*.
-
+[4] *Our results have been improved since our initial release. If you want to check out our original results, please checkout commit [f4fd589](https://github.com/tianzhi0549/FCOS/tree/f4fd58966f45e64608c00b072c801de7f86b4f3a)*. \
+[5] *Num Channels denotes the number of channels in towers (i.e., `MODEL.RESNETS.BACKBONE_OUT_CHANNELS` in [config](https://github.com/tianzhi0549/FCOS/blob/master/configs/fcos/fcos_syncbn_bs32_c128_MNV2_FPN_1x.yaml#L10)).*
 ## Training
 
 The following command line will train FCOS_R_50_FPN_1x on 8 GPUs with Synchronous Stochastic Gradient Descent (SGD):
