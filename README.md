@@ -17,6 +17,9 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 It achieves **41.5%** (ResNet-101-FPN) and **43.2%** (ResNeXt-64x4d-101) in AP on coco test-dev.
 
 ## Updates
+### 3 July 2019
+   - FCOS with HRNet backbones is available at [HRNet-FCOS](https://github.com/HRNet/HRNet-FCOS).
+    
 ### 17 May 2019
    - FCOS has been implemented in [mmdetection](https://github.com/open-mmlab/mmdetection). Many thanks to [@yhcao6](https://github.com/yhcao6) and [@hellock](https://github.com/hellock).
 
