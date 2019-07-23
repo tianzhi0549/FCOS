@@ -4,7 +4,8 @@ This project hosts the code for implementing the FCOS algorithm for object detec
 
     FCOS: Fully Convolutional One-Stage Object Detection;
     Tian Zhi, Chunhua Shen, Hao Chen, and Tong He;
-    arXiv preprint arXiv:1904.01355 (2019).
+    In: Proc. Int. Conf. Computer Vision (ICCV), 2019.
+    arXiv preprint arXiv:1904.01355 
 
 The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv.org/abs/1904.01355). 
 
@@ -113,10 +114,10 @@ Any pull requests or issues are welcome.
 ## Citations
 Please consider citing our paper in your publications if the project helps your research. BibTeX reference is as follows.
 ```
-@article{tian2019fcos,
+@inproceedings{tian2019fcos,
   title   =  {{FCOS}: Fully Convolutional One-Stage Object Detection},
   author  =  {Tian, Zhi and Shen, Chunhua and Chen, Hao and He, Tong},
-  journal =  {arXiv preprint arXiv:1904.01355},
+  booktitle =  {Proc. Int. Conf. Computer Vision (ICCV)},
   year    =  {2019}
 }
 ```
