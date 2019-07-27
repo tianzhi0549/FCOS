@@ -105,11 +105,11 @@ class FCOSLossComputation(object):
 
             # if there are still more than one objects for a location,
             # we choose the one with minimal area
-            locations_to_min_aera, locations_to_gt_inds = locations_to_gt_area.min(dim=1)
+            locations_to_min_area, locations_to_gt_inds = locations_to_gt_area.min(dim=1)
 
             reg_targets_per_im = reg_targets_per_im[range(len(locations)), locations_to_gt_inds]
             labels_per_im = labels_per_im[locations_to_gt_inds]
-            labels_per_im[locations_to_min_aera == INF] = 0
+            labels_per_im[locations_to_min_area == INF] = 0
 
             labels.append(labels_per_im)
             reg_targets.append(reg_targets_per_im)
