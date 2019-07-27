@@ -14,9 +14,9 @@ class IOULoss(nn.Module):
         target_right = target[:, 2]
         target_bottom = target[:, 3]
 
-        target_aera = (target_left + target_right) * \
+        target_area = (target_left + target_right) * \
                       (target_top + target_bottom)
-        pred_aera = (pred_left + pred_right) * \
+        pred_area = (pred_left + pred_right) * \
                     (pred_top + pred_bottom)
 
         w_intersect = torch.min(pred_left, target_left) + \
@@ -25,7 +25,7 @@ class IOULoss(nn.Module):
                       torch.min(pred_top, target_top)
 
         area_intersect = w_intersect * h_intersect
-        area_union = target_aera + pred_aera - area_intersect
+        area_union = target_area + pred_area - area_intersect
 
         losses = -torch.log((area_intersect + 1.0) / (area_union + 1.0))
 
