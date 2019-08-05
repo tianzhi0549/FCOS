@@ -36,12 +36,12 @@ But 4 1080Ti GPUs can also train a fully-fledged ResNet-50-FPN based FCOS since 
 
 ## Installation
 #### Testing-only installation 
-For users who only want to use FCOS as an object detector in their project, they can install it by pip. To do so, run:
+For users who only want to use FCOS as an object detector in their projects, they can install it by pip. To do so, run:
 ```
 pip install torch  # install pytorch if you do not have it
 pip install fcos
 ```
-Please check out [here](fcos/__main__.py) for the usage.
+Please check out [here](fcos/bin/fcos.py) for the usage.
 
 #### For a complete installation 
 This FCOS implementation is based on [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark). Therefore the installation is the same as original maskrcnn-benchmark.

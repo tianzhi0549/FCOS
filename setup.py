@@ -69,6 +69,7 @@ setup(
     author="Zhi Tian",
     url="https://github.com/tianzhi0549/FCOS",
     description="FCOS object detector in pytorch",
+    scripts=["fcos/bin/fcos"],
     packages=find_packages(exclude=("configs", "tests",)),
     install_requires=requirements,
     ext_modules=get_extensions(),
