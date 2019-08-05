@@ -1,5 +1,10 @@
+torch
+torchvision
 ninja
 yacs
 cython
 matplotlib
 tqdm
+opencv-python
+scikit-image
+
