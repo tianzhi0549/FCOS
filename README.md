@@ -13,7 +13,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
 - **Memory-efficient:** FCOS uses 2x less training memory footprint than its anchor-based counterpart RetinaNet.
 - **Better performance:** The very simple detector achieves better performance (37.1 vs. 36.8) than Faster R-CNN.
-- **Faster training and inference:** With the same hardwares, FCOS also requires less training hours (6.5h vs. 8.8h) and faster inference speed (71ms vs. 126 ms per im) than Faster R-CNN.
+- **Faster training:** With the same hardwares, FCOS also requires less training hours (6.5h vs. 8.8h) than Faster R-CNN.
 - **State-of-the-art performance:** Without bells and whistles, FCOS achieves state-of-the-art performances.
 It achieves **41.5%** (ResNet-101-FPN) and **43.2%** (ResNeXt-64x4d-101) in AP on coco test-dev.
 
@@ -35,7 +35,15 @@ We use 8 Nvidia V100 GPUs. \
 But 4 1080Ti GPUs can also train a fully-fledged ResNet-50-FPN based FCOS since FCOS is memory-efficient.  
 
 ## Installation
+#### Testing-only installation 
+For users who only want to use FCOS as an object detector in their project, they can install it by pip. To do so, run:
+```
+pip install torch  # install pytorch if you do not have it
+pip install fcos
+```
+Please check out [here](fcos/__main__.py) for the usage.
 
+#### For a complete installation 
 This FCOS implementation is based on [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark). Therefore the installation is the same as original maskrcnn-benchmark.
 
 Please check [INSTALL.md](INSTALL.md) for installation instructions.
