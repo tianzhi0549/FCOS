@@ -41,7 +41,7 @@ For users who only want to use FCOS as an object detector in their projects, the
 pip install torch  # install pytorch if you do not have it
 pip install fcos
 ```
-Please check out [here](fcos/bin/fcos.py) for the usage.
+Please check out [here](fcos/bin/fcos) for the usage.
 
 #### For a complete installation 
 This FCOS implementation is based on [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark). Therefore the installation is the same as original maskrcnn-benchmark.
