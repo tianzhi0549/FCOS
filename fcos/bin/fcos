@@ -31,7 +31,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 fcos = FCOS(
-    model_name="fcos_R_50_FPN_1x",
+    model_name="fcos_syncbn_bs32_c128_MNV2_FPN_1x",
     nms_thresh=0.6,
     cpu_only=not torch.cuda.is_available()  # if you do not have GPUs, please set cpu_only as True
 )
