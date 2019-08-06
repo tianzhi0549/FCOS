@@ -3,12 +3,12 @@ import cv2
 import torch
 from torchvision import transforms as T
 
-from maskrcnn_benchmark.modeling.detector import build_detection_model
-from maskrcnn_benchmark.utils.checkpoint import DetectronCheckpointer
-from maskrcnn_benchmark.structures.image_list import to_image_list
-from maskrcnn_benchmark.modeling.roi_heads.mask_head.inference import Masker
-from maskrcnn_benchmark import layers as L
-from maskrcnn_benchmark.utils import cv2_util
+from fcos_core.modeling.detector import build_detection_model
+from fcos_core.utils.checkpoint import DetectronCheckpointer
+from fcos_core.structures.image_list import to_image_list
+from fcos_core.modeling.roi_heads.mask_head.inference import Masker
+from fcos_core import layers as L
+from fcos_core.utils import cv2_util
 
 
 class COCODemo(object):
@@ -373,7 +373,7 @@ class COCODemo(object):
 
 import numpy as np
 import matplotlib.pyplot as plt
-from maskrcnn_benchmark.structures.keypoint import PersonKeypoints
+from fcos_core.structures.keypoint import PersonKeypoints
 
 def vis_keypoints(img, kps, kp_thresh=2, alpha=0.7):
     """Visualizes keypoints (adapted from vis_one_image).

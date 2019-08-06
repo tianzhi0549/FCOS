@@ -1,7 +1,7 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 import unittest
 import torch
-from maskrcnn_benchmark.structures.segmentation_mask import SegmentationMask
+from fcos_core.structures.segmentation_mask import SegmentationMask
 
 
 class TestSegmentationMask(unittest.TestCase):

@@ -1,11 +1,11 @@
 import cv2, os
 import torch
-from maskrcnn_benchmark.config import cfg as base_cfg
+from fcos_core.config import cfg as base_cfg
 from torchvision import transforms as T
-from maskrcnn_benchmark.modeling.detector import build_detection_model
-from maskrcnn_benchmark.utils.checkpoint import DetectronCheckpointer
-from maskrcnn_benchmark.structures.image_list import to_image_list
-from maskrcnn_benchmark.structures.bounding_box import BoxList
+from fcos_core.modeling.detector import build_detection_model
+from fcos_core.utils.checkpoint import DetectronCheckpointer
+from fcos_core.structures.image_list import to_image_list
+from fcos_core.structures.bounding_box import BoxList
 
 
 _MODEL_NAMES_TO_INFO_ = {

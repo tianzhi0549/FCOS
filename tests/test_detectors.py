@@ -5,8 +5,8 @@ import glob
 import os
 import copy
 import torch
-from maskrcnn_benchmark.modeling.detector import build_detection_model
-from maskrcnn_benchmark.structures.image_list import to_image_list
+from fcos_core.modeling.detector import build_detection_model
+from fcos_core.structures.image_list import to_image_list
 import utils
 
 

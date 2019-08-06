@@ -1,7 +1,7 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 import unittest
 
-from maskrcnn_benchmark.utils.metric_logger import MetricLogger
+from fcos_core.utils.metric_logger import MetricLogger
 
 
 class TestMetricLogger(unittest.TestCase):

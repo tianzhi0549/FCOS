@@ -1,5 +1,5 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 #!/usr/bin/env python
+# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 import glob
 import os
@@ -25,7 +25,7 @@ requirements = [
 
 
 def get_extensions():
-    extensions_dir = os.path.join("maskrcnn_benchmark", "csrc")
+    extensions_dir = os.path.join("fcos_core", "csrc")
 
     main_file = glob.glob(os.path.join(extensions_dir, "*.cpp"))
     source_cpu = glob.glob(os.path.join(extensions_dir, "cpu", "*.cpp"))
@@ -52,7 +52,7 @@ def get_extensions():
 
     ext_modules = [
         extension(
-            "maskrcnn_benchmark._C",
+            "fcos_core._C",
             sources,
             include_dirs=include_dirs,
             define_macros=define_macros,
