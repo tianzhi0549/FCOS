@@ -65,7 +65,7 @@ def get_extensions():
 
 setup(
     name="fcos",
-    version="0.1.7",
+    version="0.1.8",
     author="Zhi Tian",
     url="https://github.com/tianzhi0549/FCOS",
     description="FCOS object detector in pytorch",
