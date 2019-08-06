@@ -21,7 +21,7 @@ def setup_custom_environment(custom_module_path):
     """Load custom environment setup from a Python source file and run the setup
     function.
     """
-    module = import_file("maskrcnn_benchmark.utils.env.custom_module", custom_module_path)
+    module = import_file("fcos_core.utils.env.custom_module", custom_module_path)
     assert hasattr(module, "setup_environment") and callable(
         module.setup_environment
     ), (
