@@ -45,7 +45,7 @@ def _accumulate_predictions_from_multiple_gpus(predictions_per_gpu):
     # convert a dict where the key is the index in a list
     image_ids = list(sorted(predictions.keys()))
     if len(image_ids) != image_ids[-1] + 1:
-        logger = logging.getLogger("maskrcnn_benchmark.inference")
+        logger = logging.getLogger("fcos_core.inference")
         logger.warning(
             "Number of images that were gathered from multiple processes is not "
             "a contiguous set. Some images might be missing from the evaluation"
@@ -70,7 +70,7 @@ def inference(
     # convert to a torch.device for efficiency
     device = torch.device(device)
     num_devices = get_world_size()
-    logger = logging.getLogger("maskrcnn_benchmark.inference")
+    logger = logging.getLogger("fcos_core.inference")
     dataset = data_loader.dataset
     logger.info("Start evaluation on {} dataset({} images).".format(dataset_name, len(dataset)))
     total_timer = Timer()

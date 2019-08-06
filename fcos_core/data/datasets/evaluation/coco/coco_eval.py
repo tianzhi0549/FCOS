@@ -19,7 +19,7 @@ def do_coco_evaluation(
     expected_results,
     expected_results_sigma_tol,
 ):
-    logger = logging.getLogger("maskrcnn_benchmark.inference")
+    logger = logging.getLogger("fcos_core.inference")
 
     if box_only:
         logger.info("Evaluating bbox proposals")
@@ -404,7 +404,7 @@ def check_expected_results(results, expected_results, sigma_tol):
     if not expected_results:
         return
 
-    logger = logging.getLogger("maskrcnn_benchmark.inference")
+    logger = logging.getLogger("fcos_core.inference")
     for task, metric, (mean, std) in expected_results:
         actual_val = results.results[task][metric]
         lo = mean - sigma_tol * std

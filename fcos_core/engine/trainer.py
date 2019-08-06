@@ -45,7 +45,7 @@ def do_train(
     checkpoint_period,
     arguments,
 ):
-    logger = logging.getLogger("maskrcnn_benchmark.trainer")
+    logger = logging.getLogger("fcos_core.trainer")
     logger.info("Start training")
     meters = MetricLogger(delimiter="  ")
     max_iter = len(data_loader)
