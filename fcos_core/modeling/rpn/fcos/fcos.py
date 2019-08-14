@@ -83,9 +83,10 @@ class FCOSHead(torch.nn.Module):
         for l, feature in enumerate(x):
             cls_tower = self.cls_tower(feature)
             logits.append(self.cls_logits(cls_tower))
-            centerness.append(self.centerness(cls_tower))
+            box_tower = self.bbox_tower(feature)
+            centerness.append(self.centerness(box_tower))
             bbox_reg.append(torch.exp(self.scales[l](
-                self.bbox_pred(self.bbox_tower(feature))
+                self.bbox_pred(box_tower)
             )))
         return logits, bbox_reg, centerness
 
