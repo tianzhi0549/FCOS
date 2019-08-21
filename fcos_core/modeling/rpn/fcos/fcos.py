@@ -18,6 +18,9 @@ class FCOSHead(torch.nn.Module):
         super(FCOSHead, self).__init__()
         # TODO: Implement the sigmoid version first.
         num_classes = cfg.MODEL.FCOS.NUM_CLASSES - 1
+        self.fpn_strides = cfg.MODEL.FCOS.FPN_STRIDES
+        self.norm_reg_targets = cfg.MODEL.FCOS.NORM_REG_TARGETS
+        self.centerness_on_reg = cfg.MODEL.FCOS.CENTERNESS_ON_REG
 
         cls_tower = []
         bbox_tower = []
@@ -82,12 +85,23 @@ class FCOSHead(torch.nn.Module):
         centerness = []
         for l, feature in enumerate(x):
             cls_tower = self.cls_tower(feature)
-            logits.append(self.cls_logits(cls_tower))
             box_tower = self.bbox_tower(feature)
-            centerness.append(self.centerness(box_tower))
-            bbox_reg.append(torch.exp(self.scales[l](
-                self.bbox_pred(box_tower)
-            )))
+
+            logits.append(self.cls_logits(cls_tower))
+            if self.centerness_on_reg:
+                centerness.append(self.centerness(box_tower))
+            else:
+                centerness.append(self.centerness(cls_tower))
+
+            bbox_pred = self.scales[l](self.bbox_pred(box_tower))
+            if self.norm_reg_targets:
+                if self.training:
+                    bbox_pred = F.relu(bbox_pred)
+                    bbox_reg.append(bbox_pred)
+                else:
+                    bbox_reg.append(bbox_pred * self.fpn_strides[l])
+            else:
+                bbox_reg.append(torch.exp(bbox_pred))
         return logits, bbox_reg, centerness
 
 

@@ -29,13 +29,22 @@ class FCOSLossComputation(object):
             cfg.MODEL.FCOS.LOSS_GAMMA,
             cfg.MODEL.FCOS.LOSS_ALPHA
         )
-        self.strides = cfg.MODEL.FCOS.FPN_STRIDES
+        self.fpn_strides = cfg.MODEL.FCOS.FPN_STRIDES
+        self.center_sampling_radius = cfg.MODEL.FCOS.CENTER_SAMPLING_RADIUS
+        self.iou_loss_type = cfg.MODEL.FCOS.IOU_LOSS_TYPE
+        self.norm_reg_targets = cfg.MODEL.FCOS.NORM_REG_TARGETS
+
         # we make use of IOU Loss for bounding boxes regression,
         # but we found that L1 in log scale can yield a similar performance
-        self.box_reg_loss_func = IOULoss()
+        self.box_reg_loss_func = IOULoss(self.iou_loss_type)
         self.centerness_loss_func = nn.BCEWithLogitsLoss()
 
-    def get_sample_region(self, gt, strides, num_points_per, gt_xs, gt_ys, radius=1):
+    def get_sample_region(self, gt, strides, num_points_per, gt_xs, gt_ys, radius=1.0):
+        '''
+        This code is from
+        https://github.com/yqyao/FCOS_PLUS/blob/0d20ba34ccc316650d8c30febb2eb40cb6eaae37/
+        maskrcnn_benchmark/modeling/rpn/fcos/loss.py#L42
+        '''
         num_gts = gt.shape[0]
         K = len(gt_xs)
         gt = gt[None].expand(K, num_gts, 4)
@@ -54,10 +63,20 @@ class FCOSLossComputation(object):
             xmax = center_x[beg:end] + stride
             ymax = center_y[beg:end] + stride
             # limit sample region in gt
-            center_gt[beg:end, :, 0] = torch.where(xmin > gt[beg:end, :, 0], xmin, gt[beg:end, :, 0])
-            center_gt[beg:end, :, 1] = torch.where(ymin > gt[beg:end, :, 1], ymin, gt[beg:end, :, 1])
-            center_gt[beg:end, :, 2] = torch.where(xmax > gt[beg:end, :, 2], gt[beg:end, :, 2], xmax)
-            center_gt[beg:end, :, 3] = torch.where(ymax > gt[beg:end, :, 3], gt[beg:end, :, 3], ymax)
+            center_gt[beg:end, :, 0] = torch.where(
+                xmin > gt[beg:end, :, 0], xmin, gt[beg:end, :, 0]
+            )
+            center_gt[beg:end, :, 1] = torch.where(
+                ymin > gt[beg:end, :, 1], ymin, gt[beg:end, :, 1]
+            )
+            center_gt[beg:end, :, 2] = torch.where(
+                xmax > gt[beg:end, :, 2],
+                gt[beg:end, :, 2], xmax
+            )
+            center_gt[beg:end, :, 3] = torch.where(
+                ymax > gt[beg:end, :, 3],
+                gt[beg:end, :, 3], ymax
+            )
             beg = end
         left = gt_xs[:, None] - center_gt[..., 0]
         right = center_gt[..., 2] - gt_xs[:, None]
@@ -101,9 +120,15 @@ class FCOSLossComputation(object):
             labels_level_first.append(
                 torch.cat([labels_per_im[level] for labels_per_im in labels], dim=0)
             )
-            reg_targets_level_first.append(
-                torch.cat([reg_targets_per_im[level] for reg_targets_per_im in reg_targets], dim=0)
-            )
+
+            reg_targets_per_level = torch.cat([
+                reg_targets_per_im[level]
+                for reg_targets_per_im in reg_targets
+            ], dim=0)
+
+            if self.norm_reg_targets:
+                reg_targets_per_level = reg_targets_per_level / self.fpn_strides[level]
+            reg_targets_level_first.append(reg_targets_per_level)
 
         return labels_level_first, reg_targets_level_first
 
@@ -125,14 +150,17 @@ class FCOSLossComputation(object):
             b = bboxes[:, 3][None] - ys[:, None]
             reg_targets_per_im = torch.stack([l, t, r, b], dim=2)
 
-            is_in_boxes = self.get_sample_region(
-                bboxes,
-                self.strides,
-                self.num_points_per_level,
-                xs,
-                ys,
-                radius=1.5
-            )
+            if self.center_sampling_radius > 0:
+                is_in_boxes = self.get_sample_region(
+                    bboxes,
+                    self.fpn_strides,
+                    self.num_points_per_level,
+                    xs, ys,
+                    radius=self.center_sampling_radius
+                )
+            else:
+                # no center sampling, it will use all the locations within a ground-truth box
+                is_in_boxes = reg_targets_per_im.min(dim=2)[0] > 0
 
             max_reg_targets_per_im = reg_targets_per_im.max(dim=2)[0]
             # limit the regression range for each location

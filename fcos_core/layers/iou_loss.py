@@ -1,11 +1,13 @@
+# GIoU and Linear IoU are added by following
+# https://github.com/yqyao/FCOS_PLUS/blob/master/maskrcnn_benchmark/layers/iou_loss.py.
 import torch
 from torch import nn
 
 
 class IOULoss(nn.Module):
-    def __init__(self):
+    def __init__(self, loss_type="iou"):
         super(IOULoss, self).__init__()
-        self.loc_loss_type = "giou"
+        self.loss_type = loss_type
 
     def forward(self, pred, target, weight=None):
         pred_left = pred[:, 0]
@@ -33,11 +35,11 @@ class IOULoss(nn.Module):
         area_union = target_area + pred_area - area_intersect
         ious = (area_intersect + 1.0) / (area_union + 1.0)
         gious = ious - (ac_uion - area_union) / ac_uion
-        if self.loc_loss_type == 'iou':
+        if self.loss_type == 'iou':
             losses = -torch.log(ious)
-        elif self.loc_loss_type == 'linear_iou':
+        elif self.loss_type == 'linear_iou':
             losses = 1 - ious
-        elif self.loc_loss_type == 'giou':
+        elif self.loss_type == 'giou':
             losses = 1 - gious
         else:
             raise NotImplementedError
@@ -47,4 +49,3 @@ class IOULoss(nn.Module):
         else:
             assert losses.numel() != 0
             return losses.mean()
-

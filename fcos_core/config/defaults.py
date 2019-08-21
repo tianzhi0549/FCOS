@@ -297,6 +297,14 @@ _C.MODEL.FCOS.LOSS_GAMMA = 2.0
 # the number of convolutions used in the cls and bbox tower
 _C.MODEL.FCOS.NUM_CONVS = 4
 
+# if CENTER_SAMPLING_RADIUS <= 0, it will disable center sampling
+_C.MODEL.FCOS.CENTER_SAMPLING_RADIUS = 0.0
+# IOU_LOSS_TYPE can be "iou", "linear_iou" or "giou"
+_C.MODEL.FCOS.IOU_LOSS_TYPE = "iou"
+
+_C.MODEL.FCOS.NORM_REG_TARGETS = False
+_C.MODEL.FCOS.CENTERNESS_ON_REG = False
+
 # ---------------------------------------------------------------------------- #
 # RetinaNet Options (Follow the Detectron version)
 # ---------------------------------------------------------------------------- #
