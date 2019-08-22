@@ -278,6 +278,11 @@ _C.MODEL.RESNETS.BACKBONE_OUT_CHANNELS = 256 * 4
 _C.MODEL.RESNETS.RES2_OUT_CHANNELS = 256
 _C.MODEL.RESNETS.STEM_OUT_CHANNELS = 64
 
+# Deformable convolutions
+_C.MODEL.RESNETS.STAGE_WITH_DCN = (False, False, False, False)
+_C.MODEL.RESNETS.WITH_MODULATED_DCN = False
+_C.MODEL.RESNETS.DEFORMABLE_GROUPS = 1
+
 # ---------------------------------------------------------------------------- #
 # FCOS Options
 # ---------------------------------------------------------------------------- #
