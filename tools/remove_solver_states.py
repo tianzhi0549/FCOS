@@ -19,6 +19,7 @@ def main():
     model = torch.load(args.model)
     del model["optimizer"]
     del model["scheduler"]
+    del model["iteration"]
 
     filename_wo_ext, ext = os.path.splitext(args.model)
     output_file = filename_wo_ext + "_wo_solver_states" + ext
