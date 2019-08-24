@@ -6,7 +6,7 @@ file
 import torch
 from torch.nn import functional as F
 from torch import nn
-
+import os
 from ..utils import concat_box_prediction_layers
 from fcos_core.layers import IOULoss
 from fcos_core.layers import SigmoidFocalLoss
@@ -17,6 +17,17 @@ from fcos_core.structures.boxlist_ops import cat_boxlist
 
 
 INF = 100000000
+
+
+def get_num_gpus():
+    return int(os.environ["WORLD_SIZE"]) if "WORLD_SIZE" in os.environ else 1
+
+
+def reduce_sum(tensor):
+    import torch.distributed as dist
+    tensor = tensor.clone()
+    dist.all_reduce(tensor, op=dist.reduce_op.SUM)
+    return tensor
 
 
 class FCOSLossComputation(object):
@@ -37,7 +48,7 @@ class FCOSLossComputation(object):
         # we make use of IOU Loss for bounding boxes regression,
         # but we found that L1 in log scale can yield a similar performance
         self.box_reg_loss_func = IOULoss(self.iou_loss_type)
-        self.centerness_loss_func = nn.BCEWithLogitsLoss()
+        self.centerness_loss_func = nn.BCEWithLogitsLoss(reduction="sum")
 
     def get_sample_region(self, gt, strides, num_points_per, gt_xs, gt_ys, radius=1.0):
         '''
@@ -229,28 +240,39 @@ class FCOSLossComputation(object):
         reg_targets_flatten = torch.cat(reg_targets_flatten, dim=0)
 
         pos_inds = torch.nonzero(labels_flatten > 0).squeeze(1)
-        cls_loss = self.cls_loss_func(
-            box_cls_flatten,
-            labels_flatten.int()
-        ) / (pos_inds.numel() + N)  # add N to avoid dividing by a zero
 
         box_regression_flatten = box_regression_flatten[pos_inds]
         reg_targets_flatten = reg_targets_flatten[pos_inds]
         centerness_flatten = centerness_flatten[pos_inds]
 
+        num_pos_per_gpu = pos_inds.numel()
+        num_gpus = get_num_gpus()
+        if num_gpus > 1:
+            total_num_pos = reduce_sum(pos_inds.new_tensor([num_pos_per_gpu])).item()
+        else:
+            total_num_pos = num_pos_per_gpu
+
+        cls_loss = self.cls_loss_func(
+            box_cls_flatten,
+            labels_flatten.int()
+        ) / max(total_num_pos / float(num_gpus), 1.0)
+
         if pos_inds.numel() > 0:
             centerness_targets = self.compute_centerness_targets(reg_targets_flatten)
+            sum_centerness_targets = centerness_targets.sum()
+            sum_centerness_targets = reduce_sum(sum_centerness_targets).item()
             reg_loss = self.box_reg_loss_func(
                 box_regression_flatten,
                 reg_targets_flatten,
                 centerness_targets
-            )
+            ) / (sum_centerness_targets / float(num_gpus))
             centerness_loss = self.centerness_loss_func(
                 centerness_flatten,
                 centerness_targets
-            )
+            ) / max(total_num_pos / float(num_gpus), 1.0)
         else:
             reg_loss = box_regression_flatten.sum()
+            reduce_sum(centerness_flatten.new_tensor([0.0]))
             centerness_loss = centerness_flatten.sum()
 
         return cls_loss, reg_loss, centerness_loss
