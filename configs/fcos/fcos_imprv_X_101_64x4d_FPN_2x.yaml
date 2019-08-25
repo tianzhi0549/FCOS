@@ -1,6 +1,6 @@
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
-  WEIGHT: "catalog://ImageNetPretrained/FAIR/20171220/X-101-64x4d"
+  WEIGHT: "https://cloudstor.aarnet.edu.au/plus/s/k3ys35075jmU1RP/download#X-101-64x4d.pkl"
   RPN_ONLY: True
   FCOS_ON: True
   BACKBONE:
