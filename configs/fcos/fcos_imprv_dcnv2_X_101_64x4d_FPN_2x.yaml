@@ -1,0 +1,44 @@
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  WEIGHT: "https://cloudstor.aarnet.edu.au/plus/s/k3ys35075jmU1RP/download#X-101-64x4d.pkl"
+  RPN_ONLY: True
+  FCOS_ON: True
+  BACKBONE:
+    CONV_BODY: "R-101-FPN-RETINANET"
+  RESNETS:
+    STRIDE_IN_1X1: False
+    BACKBONE_OUT_CHANNELS: 256
+    NUM_GROUPS: 64
+    WIDTH_PER_GROUP: 4
+    STAGE_WITH_DCN: (False, True, True, True)
+    WITH_MODULATED_DCN: True
+    DEFORMABLE_GROUPS: 1
+  RETINANET:
+    USE_C5: False # FCOS uses P5 instead of C5
+  FCOS:
+    # normalizing the regression targets with FPN strides
+    NORM_REG_TARGETS: True
+    # positioning centerness on the regress branch.
+    # Please refer to https://github.com/tianzhi0549/FCOS/issues/89#issuecomment-516877042
+    CENTERNESS_ON_REG: True
+    # using center sampling and GIoU.
+    # Please refer to https://github.com/yqyao/FCOS_PLUS
+    CENTER_SAMPLING_RADIUS: 1.5
+    IOU_LOSS_TYPE: "giou"
+DATASETS:
+  TRAIN: ("coco_2014_train", "coco_2014_valminusminival")
+  TEST: ("coco_2014_minival",)
+INPUT:
+  MIN_SIZE_RANGE_TRAIN: (640, 800)
+  MAX_SIZE_TRAIN: 1333
+  MIN_SIZE_TEST: 800
+  MAX_SIZE_TEST: 1333
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+SOLVER:
+  BASE_LR: 0.01
+  WEIGHT_DECAY: 0.0001
+  STEPS: (120000, 160000)
+  MAX_ITER: 180000
+  IMS_PER_BATCH: 16
+  WARMUP_METHOD: "constant"
