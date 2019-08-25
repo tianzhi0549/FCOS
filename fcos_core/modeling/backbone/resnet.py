@@ -107,7 +107,7 @@ class ResNet(nn.Module):
             stage2_relative_factor = 2 ** (stage_spec.index - 1)
             bottleneck_channels = stage2_bottleneck_channels * stage2_relative_factor
             out_channels = stage2_out_channels * stage2_relative_factor
-            stage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index -1]
+            stage_with_dcn = cfg.MODEL.RESNETS.STAGE_WITH_DCN[stage_spec.index - 1]
             module = _make_stage(
                 transformation_module,
                 in_channels,
@@ -296,7 +296,7 @@ class Bottleneck(nn.Module):
                 groups=num_groups,
                 dilation=dilation,
                 deformable_groups=deformable_groups,
-                bias=False
+                bias=True
             )
         else:
             self.conv2 = Conv2d(

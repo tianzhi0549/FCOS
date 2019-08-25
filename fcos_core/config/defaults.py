@@ -416,6 +416,8 @@ _C.SOLVER.MAX_ITER = 40000
 
 _C.SOLVER.BASE_LR = 0.001
 _C.SOLVER.BIAS_LR_FACTOR = 2
+# the learning rate factor of deformable convolution offsets
+_C.SOLVER.DCONV_OFFSETS_LR_FACTOR = 1.0
 
 _C.SOLVER.MOMENTUM = 0.9
 
@@ -435,6 +437,7 @@ _C.SOLVER.CHECKPOINT_PERIOD = 2500
 # This is global, so if we have 8 GPUs and IMS_PER_BATCH = 16, each GPU will
 # see 2 images per batch
 _C.SOLVER.IMS_PER_BATCH = 16
+
 
 # ---------------------------------------------------------------------------- #
 # Specific test options
