@@ -119,6 +119,8 @@ def _rename_weights_for_resnet(weights, stage_names):
         v = weights[k]
         if "_momentum" in k:
             continue
+        if 'weight_order' in k:
+            continue
         # if 'fc1000' in k:
         #     continue
         w = torch.from_numpy(v)
