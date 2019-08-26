@@ -296,7 +296,7 @@ class Bottleneck(nn.Module):
                 groups=num_groups,
                 dilation=dilation,
                 deformable_groups=deformable_groups,
-                bias=True
+                bias=False
             )
         else:
             self.conv2 = Conv2d(
