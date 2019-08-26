@@ -259,8 +259,13 @@ class FCOSLossComputation(object):
 
         if pos_inds.numel() > 0:
             centerness_targets = self.compute_centerness_targets(reg_targets_flatten)
+
             sum_centerness_targets = centerness_targets.sum()
-            sum_centerness_targets = reduce_sum(sum_centerness_targets).item()
+            if num_gpus > 1:
+                sum_centerness_targets = reduce_sum(sum_centerness_targets).item()
+            else:
+                sum_centerness_targets = sum_centerness_targets.item()
+
             reg_loss = self.box_reg_loss_func(
                 box_regression_flatten,
                 reg_targets_flatten,
