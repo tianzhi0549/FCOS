@@ -310,6 +310,8 @@ _C.MODEL.FCOS.IOU_LOSS_TYPE = "iou"
 _C.MODEL.FCOS.NORM_REG_TARGETS = False
 _C.MODEL.FCOS.CENTERNESS_ON_REG = False
 
+_C.MODEL.FCOS.USE_DCN_IN_TOWER = False
+
 # ---------------------------------------------------------------------------- #
 # RetinaNet Options (Follow the Detectron version)
 # ---------------------------------------------------------------------------- #

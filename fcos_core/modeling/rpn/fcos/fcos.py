@@ -7,6 +7,7 @@ from .inference import make_fcos_postprocessor
 from .loss import make_fcos_loss_evaluator
 
 from fcos_core.layers import Scale
+from fcos_core.layers import DFConv2d
 
 
 class FCOSHead(torch.nn.Module):
@@ -21,28 +22,37 @@ class FCOSHead(torch.nn.Module):
         self.fpn_strides = cfg.MODEL.FCOS.FPN_STRIDES
         self.norm_reg_targets = cfg.MODEL.FCOS.NORM_REG_TARGETS
         self.centerness_on_reg = cfg.MODEL.FCOS.CENTERNESS_ON_REG
+        self.use_dcn_in_tower = cfg.MODEL.FCOS.USE_DCN_IN_TOWER
 
         cls_tower = []
         bbox_tower = []
         for i in range(cfg.MODEL.FCOS.NUM_CONVS):
+            if self.use_dcn_in_tower and \
+                    i == cfg.MODEL.FCOS.NUM_CONVS - 1:
+                conv_func = DFConv2d
+            else:
+                conv_func = nn.Conv2d
+
             cls_tower.append(
-                nn.Conv2d(
+                conv_func(
                     in_channels,
                     in_channels,
                     kernel_size=3,
                     stride=1,
-                    padding=1
+                    padding=1,
+                    bias=True
                 )
             )
             cls_tower.append(nn.GroupNorm(32, in_channels))
             cls_tower.append(nn.ReLU())
             bbox_tower.append(
-                nn.Conv2d(
+                conv_func(
                     in_channels,
                     in_channels,
                     kernel_size=3,
                     stride=1,
-                    padding=1
+                    padding=1,
+                    bias=True
                 )
             )
             bbox_tower.append(nn.GroupNorm(32, in_channels))
