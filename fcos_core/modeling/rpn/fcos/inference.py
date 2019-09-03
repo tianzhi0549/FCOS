@@ -24,6 +24,7 @@ class FCOSPostProcessor(torch.nn.Module):
         fpn_post_nms_top_n,
         min_size,
         num_classes,
+        bbox_aug_enabled=False
     ):
         """
         Arguments:
@@ -42,6 +43,7 @@ class FCOSPostProcessor(torch.nn.Module):
         self.fpn_post_nms_top_n = fpn_post_nms_top_n
         self.min_size = min_size
         self.num_classes = num_classes
+        self.bbox_aug_enabled = bbox_aug_enabled
 
     def forward_for_single_feature_map(
             self, locations, box_cls,
@@ -131,7 +133,8 @@ class FCOSPostProcessor(torch.nn.Module):
 
         boxlists = list(zip(*sampled_boxes))
         boxlists = [cat_boxlist(boxlist) for boxlist in boxlists]
-        boxlists = self.select_over_all_levels(boxlists)
+        if not self.bbox_aug_enabled:
+            boxlists = self.select_over_all_levels(boxlists)
 
         return boxlists
 
@@ -190,6 +193,7 @@ def make_fcos_postprocessor(config):
     pre_nms_top_n = config.MODEL.FCOS.PRE_NMS_TOP_N
     nms_thresh = config.MODEL.FCOS.NMS_TH
     fpn_post_nms_top_n = config.TEST.DETECTIONS_PER_IMG
+    bbox_aug_enabled = config.TEST.BBOX_AUG.ENABLED
 
     box_selector = FCOSPostProcessor(
         pre_nms_thresh=pre_nms_thresh,
@@ -197,7 +201,8 @@ def make_fcos_postprocessor(config):
         nms_thresh=nms_thresh,
         fpn_post_nms_top_n=fpn_post_nms_top_n,
         min_size=0,
-        num_classes=config.MODEL.FCOS.NUM_CLASSES
+        num_classes=config.MODEL.FCOS.NUM_CLASSES,
+        bbox_aug_enabled=bbox_aug_enabled
     )
 
     return box_selector
