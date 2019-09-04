@@ -15,7 +15,7 @@ class DatasetCatalog(object):
             "img_dir": "coco/val2017",
             "ann_file": "coco/annotations/instances_val2017.json"
         },
-        "coco_2014_valminusminival": {
+        "coco_2017_test_dev": {
             "img_dir": "coco/test2017",
             "ann_file": "coco/annotations/image_info_test-dev2017.json"
         },
