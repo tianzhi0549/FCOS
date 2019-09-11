@@ -92,6 +92,7 @@ FCOS_imprv_X_101_32x8d_FPN_2x | Yes | 130ms | 44.0 | [download](https://cloudsto
 FCOS_imprv_X_101_64x4d_FPN_2x | Yes | 133ms | 44.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/rKOJtwvJwcKVOz8/download)
 
 *The following models are with deformable convolutions (v2). Note that for ResNet based models, we apply deformable convolutions from stage c3 to c5 in backbones. For ResNeXt based models, only stage c4 and c5 use deformable convolutions. All models use deformable convolutions in the last layer of detector towers.*
+
 Model | Multi-scale training | Testing time / im | AP (minival) | Link
 --- |:---:|:---:|:---:|:---:
 FCOS_imprv_dcnv2_R_50_FPN_1x | No | 70ms | 42.3 | [download](https://cloudstor.aarnet.edu.au/plus/s/plKgHuykjiilzWr/download)
@@ -121,7 +122,7 @@ FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 59ms | 31.0 | [download](https://cloudstor.
 [1] *1x and 2x mean the model is trained for 90K and 180K iterations, respectively.* \
 [2] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
 [3] *`c128` denotes the model has 128 (instead of 256) channels in towers (i.e., `MODEL.RESNETS.BACKBONE_OUT_CHANNELS` in [config](https://github.com/tianzhi0549/FCOS/blob/master/configs/fcos/fcos_syncbn_bs32_c128_MNV2_FPN_1x.yaml#L10)).* \
-[4] *The model `FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x` with multi-scale testing achieves 49.0% in AP on COCO test-dev.* Please use `TEST.BBOX_AUG.ENABLED True` to enable multi-scale testing.
+[4] *The model `FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x` with multi-scale testing achieves 49.0% in AP on COCO test-dev. Please use `TEST.BBOX_AUG.ENABLED True` to enable multi-scale testing.*
 
 ## Training
 
