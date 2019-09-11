@@ -13,9 +13,12 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
 - **Better performance:** The very simple one-stage detector achieves much better performance (38.7 vs. 36.8 in AP with ResNet-50) than Faster R-CNN.
 - **Faster training:** With the same hardwares, FCOS also requires less training hours (6.5h vs. 8.8h) than Faster R-CNN.
-- **State-of-the-art performance:** Our best model based on ResNeXt-64x4d-101 and deformable convolutions achieves **49.0%** in AP on coco test-dev (with multi-scale testing).
+- **State-of-the-art performance:** Our best model based on ResNeXt-64x4d-101 and deformable convolutions achieves **49.0%** in AP on COCO test-dev (with multi-scale testing).
 
 ## Updates
+### 11 September 2019
+   - New models are released. The best model achieves **49%** in AP on COCO test-dev with multi-scale testing.
+    
 ### 8 August 2019
    - FCOS with VoVNet backbones is available at [VoVNet-FCOS](https://github.com/vov-net/VoVNet-FCOS).
    
@@ -57,7 +60,7 @@ Once the installation is done, you can follow the below steps to run a quick dem
     
     # assume that you are under the root directory of this project,
     # and you have activated your virtual environment if needed.
-    wget https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download -O FCOS_R_50_FPN_1x.pth
+    wget https://cloudstor.aarnet.edu.au/plus/s/ZSAqNJB96hA71Yf/download -O FCOS_imprv_R_50_FPN_1x.pth
     python demo/fcos_demo.py
 
 
@@ -83,18 +86,27 @@ For your convenience, we provide the following trained models (more models are c
 
 Model | Multi-scale training | Testing time / im | AP (minival) | Link
 --- |:---:|:---:|:---:|:---:
-FCOS_R_50_FPN_1x | No | 71ms | 37.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
-FCOS_imprv_R_50_FPN_1x | No | 71ms | 38.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/ZSAqNJB96hA71Yf/download)
-FCOS_imprv_dcnv2_R_50_FPN_1x | No | - | 42.3 | [download](https://cloudstor.aarnet.edu.au/plus/s/plKgHuykjiilzWr/download)
-FCOS_R_101_FPN_2x | Yes | 74ms | 41.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/vjL3L0AW7vnhRTo/download)
-FCOS_imprv_R_101_FPN_2x | Yes | 74ms | 42.9 | [download](https://cloudstor.aarnet.edu.au/plus/s/hTeMuRa4pwtCemq/download)
-FCOS_imprv_dcnv2_R_101_FPN_2x | Yes | - | 45.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/xq2Ll7s0hpaQycO/download)
-FCOS_X_101_32x8d_FPN_2x | Yes | 122ms | 42.5 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
-FCOS_imprv_X_101_32x8d_FPN_2x | Yes | 122ms | 44.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/WZ0i7RZW5BRpJu6/download)
-FCOS_imprv_dcnv2_X_101_32x8d_FPN_2x | Yes | - | 46.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/08UK0OP67TogLCU/download)
-FCOS_X_101_64x4d_FPN_2x | Yes | 140ms | 43.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
-FCOS_imprv_X_101_64x4d_FPN_2x | Yes | 140ms | 44.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/rKOJtwvJwcKVOz8/download)
-FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x | Yes | - | 46.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/jdtVmG7MlugEXB7/download)
+FCOS_imprv_R_50_FPN_1x | No | 62ms | 38.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/ZSAqNJB96hA71Yf/download)
+FCOS_imprv_R_101_FPN_2x | Yes | 76ms | 43.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/hTeMuRa4pwtCemq/download)
+FCOS_imprv_X_101_32x8d_FPN_2x | Yes | 130ms | 44.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/WZ0i7RZW5BRpJu6/download)
+FCOS_imprv_X_101_64x4d_FPN_2x | Yes | 133ms | 44.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/rKOJtwvJwcKVOz8/download)
+
+*The following models are with deformable convolutions (v2). Note that for ResNet based models, we apply deformable convolutions from stage c3 to c5 in backbones. For ResNeXt based models, only stage c4 and c5 use deformable convolutions. All models use deformable convolutions in the last layer of detector towers.*
+Model | Multi-scale training | Testing time / im | AP (minival) | Link
+--- |:---:|:---:|:---:|:---:
+FCOS_imprv_dcnv2_R_50_FPN_1x | No | 70ms | 42.3 | [download](https://cloudstor.aarnet.edu.au/plus/s/plKgHuykjiilzWr/download)
+FCOS_imprv_dcnv2_R_101_FPN_2x | Yes | 89ms | 45.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/xq2Ll7s0hpaQycO/download)
+FCOS_imprv_dcnv2_X_101_32x8d_FPN_2x | Yes | 157ms | 46.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/08UK0OP67TogLCU/download)
+FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x | Yes | 160ms | 46.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/jdtVmG7MlugEXB7/download)
+
+*Note that `imprv` denotes `improvements` in our paper Table 3. These almost cost-free changes improve the performance by ~1.5% in total. Thus, we highly recommend to use them. The following are original models presented in our initial paper.*
+
+Model | Multi-scale training | Testing time / im | AP (minival) | Link
+--- |:---:|:---:|:---:|:---:
+FCOS_R_50_FPN_1x | No | 64ms | 37.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
+FCOS_R_101_FPN_2x | Yes | 78ms | 41.3 | [download](https://cloudstor.aarnet.edu.au/plus/s/vjL3L0AW7vnhRTo/download)
+FCOS_X_101_32x8d_FPN_2x | Yes | 132ms | 42.5 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
+FCOS_X_101_64x4d_FPN_2x | Yes | 135ms | 43.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
 
 **MobileNets:**
 
@@ -109,7 +121,8 @@ FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 59ms | 31.0 | [download](https://cloudstor.
 [1] *1x and 2x mean the model is trained for 90K and 180K iterations, respectively.* \
 [2] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
 [3] *`c128` denotes the model has 128 (instead of 256) channels in towers (i.e., `MODEL.RESNETS.BACKBONE_OUT_CHANNELS` in [config](https://github.com/tianzhi0549/FCOS/blob/master/configs/fcos/fcos_syncbn_bs32_c128_MNV2_FPN_1x.yaml#L10)).* \
-[4] *The model `FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x` with multi-scale testing achieves 49.0% in AP on COCO test-dev.* Please use `TEST.BBOX_AUG.ENABLED True` to enable multi-scale testing. 
+[4] *The model `FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x` with multi-scale testing achieves 49.0% in AP on COCO test-dev.* Please use `TEST.BBOX_AUG.ENABLED True` to enable multi-scale testing.
+
 ## Training
 
 The following command line will train FCOS_imprv_R_50_FPN_1x on 8 GPUs with Synchronous Stochastic Gradient Descent (SGD):
@@ -126,11 +139,10 @@ Note that:
 1) If you want to use fewer GPUs, please change `--nproc_per_node` to the number of GPUs. No other settings need to be changed. The total batch size does not depends on `nproc_per_node`. If you want to change the total batch size, please change `SOLVER.IMS_PER_BATCH` in [configs/fcos/fcos_R_50_FPN_1x.yaml](configs/fcos/fcos_R_50_FPN_1x.yaml).
 2) The models will be saved into `OUTPUT_DIR`.
 3) If you want to train FCOS with other backbones, please change `--config-file`.
-4) The link of ImageNet pre-training X-101-64x4d in the code is invalid. Please download the model [here](https://cloudstor.aarnet.edu.au/plus/s/k3ys35075jmU1RP/download).
-5) If you want to train FCOS on your own dataset, please follow this instruction [#54](https://github.com/tianzhi0549/FCOS/issues/54#issuecomment-497558687).
-6) Now, training with 8 GPUs and 4 GPUs can have the same performance. Previous performance gap was because we did not synchronize `num_pos` between GPUs when computing loss. 
-## Contributing to the project
+4) If you want to train FCOS on your own dataset, please follow this instruction [#54](https://github.com/tianzhi0549/FCOS/issues/54#issuecomment-497558687).
+5) Now, training with 8 GPUs and 4 GPUs can have the same performance. Previous performance gap was because we did not synchronize `num_pos` between GPUs when computing loss. 
 
+## Contributing to the project
 Any pull requests or issues are welcome.
 
 ## Citations
