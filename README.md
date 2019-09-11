@@ -17,7 +17,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 
 ## Updates
 ### 11 September 2019
-   - New models are released. The best model achieves **49%** in AP on COCO test-dev with multi-scale testing.
+   - New models with much improved performance are released. The best model achieves **49%** in AP on COCO test-dev with multi-scale testing.
     
 ### 8 August 2019
    - FCOS with VoVNet backbones is available at [VoVNet-FCOS](https://github.com/vov-net/VoVNet-FCOS).
