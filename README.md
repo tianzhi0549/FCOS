@@ -11,13 +11,14 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
-- **Memory-efficient:** FCOS uses 2x less training memory footprint than its anchor-based counterpart RetinaNet.
-- **Better performance:** The very simple detector achieves better performance (37.1 vs. 36.8) than Faster R-CNN.
+- **Better performance:** The very simple one-stage detector achieves much better performance (38.7 vs. 36.8 in AP with ResNet-50) than Faster R-CNN.
 - **Faster training:** With the same hardwares, FCOS also requires less training hours (6.5h vs. 8.8h) than Faster R-CNN.
-- **State-of-the-art performance:** Without bells and whistles, FCOS achieves state-of-the-art performances.
-It achieves **41.5%** (ResNet-101-FPN) and **43.2%** (ResNeXt-64x4d-101) in AP on coco test-dev.
+- **State-of-the-art performance:** Our best model based on ResNeXt-64x4d-101 and deformable convolutions achieves **49.0%** in AP on coco test-dev (with multi-scale testing).
 
 ## Updates
+### 8 August 2019
+   - FCOS with VoVNet backbones is available at [VoVNet-FCOS](https://github.com/vov-net/VoVNet-FCOS).
+   
 ### 23 July 2019
    - A trick of using a small central region of the BBox for training improves AP by nearly 1 point [as shown here](https://github.com/yqyao/FCOS_PLUS).
 
@@ -64,14 +65,15 @@ Once the installation is done, you can follow the below steps to run a quick dem
 The inference command line on coco minival split:
 
     python tools/test_net.py \
-        --config-file configs/fcos/fcos_R_50_FPN_1x.yaml \
-        MODEL.WEIGHT FCOS_R_50_FPN_1x.pth \
+        --config-file configs/fcos/fcos_imprv_R_50_FPN_1x.yaml \
+        MODEL.WEIGHT FCOS_imprv_R_50_FPN_1x.pth \
         TEST.IMS_PER_BATCH 4    
 
 Please note that:
-1) If your model's name is different, please replace `FCOS_R_50_FPN_1x.pth` with your own.
+1) If your model's name is different, please replace `FCOS_imprv_R_50_FPN_1x.pth` with your own.
 2) If you enounter out-of-memory error, please try to reduce `TEST.IMS_PER_BATCH` to 1.
 3) If you want to evaluate a different model, please change `--config-file` to its config file (in [configs/fcos](configs/fcos)) and `MODEL.WEIGHT` to its weights file.
+4) Multi-GPU inference is available, please refer to [#78](https://github.com/tianzhi0549/FCOS/issues/78#issuecomment-526990989).
 
 For your convenience, we provide the following trained models (more models are coming soon).
 
@@ -79,12 +81,20 @@ For your convenience, we provide the following trained models (more models are c
 
 *All ResNe(x)t based models are trained with 16 images in a mini-batch and frozen batch normalization (i.e., consistent with models in [maskrcnn_benchmark](https://github.com/facebookresearch/maskrcnn-benchmark)).*
 
-Model | Total training mem (GB) | Multi-scale training | Testing time / im | AP (minival) | AP (test-dev) | Link
---- |:---:|:---:|:---:|:---:|:--:|:---:
-FCOS_R_50_FPN_1x | 29.3 | No | 71ms | 37.1 | 37.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
-FCOS_R_101_FPN_2x | 44.1 | Yes | 74ms | 41.4 | 41.5 | [download](https://cloudstor.aarnet.edu.au/plus/s/vjL3L0AW7vnhRTo/download)
-FCOS_X_101_32x8d_FPN_2x | 72.9 | Yes | 122ms | 42.5 | 42.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
-FCOS_X_101_64x4d_FPN_2x | 77.7 | Yes | 140ms | 43.0 | 43.2 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
+Model | Multi-scale training | Testing time / im | AP (minival) | Link
+--- |:---:|:---:|:---:|:---:
+FCOS_R_50_FPN_1x | No | 71ms | 37.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
+FCOS_imprv_R_50_FPN_1x | No | 71ms | 38.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/ZSAqNJB96hA71Yf/download)
+FCOS_imprv_dcnv2_R_50_FPN_1x | No | - | 42.3 | [download](https://cloudstor.aarnet.edu.au/plus/s/plKgHuykjiilzWr/download)
+FCOS_R_101_FPN_2x | Yes | 74ms | 41.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/vjL3L0AW7vnhRTo/download)
+FCOS_imprv_R_101_FPN_2x | Yes | 74ms | 42.9 | [download](https://cloudstor.aarnet.edu.au/plus/s/hTeMuRa4pwtCemq/download)
+FCOS_imprv_dcnv2_R_101_FPN_2x | Yes | - | 45.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/xq2Ll7s0hpaQycO/download)
+FCOS_X_101_32x8d_FPN_2x | Yes | 122ms | 42.5 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
+FCOS_imprv_X_101_32x8d_FPN_2x | Yes | 122ms | 44.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/WZ0i7RZW5BRpJu6/download)
+FCOS_imprv_dcnv2_X_101_32x8d_FPN_2x | Yes | - | 46.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/08UK0OP67TogLCU/download)
+FCOS_X_101_64x4d_FPN_2x | Yes | 140ms | 43.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
+FCOS_imprv_X_101_64x4d_FPN_2x | Yes | 140ms | 44.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/rKOJtwvJwcKVOz8/download)
+FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x | Yes | - | 46.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/jdtVmG7MlugEXB7/download)
 
 **MobileNets:**
 
@@ -97,10 +107,9 @@ FCOS_syncbn_bs32_MNV2_FPN_1x | 32 | No | 59ms | 33.1 | [download](https://clouds
 FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 59ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
 
 [1] *1x and 2x mean the model is trained for 90K and 180K iterations, respectively.* \
-[2] *We report total training memory footprint on all GPUs instead of the memory footprint per GPU as in maskrcnn-benchmark*. \
-[3] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
-[4] *Our results have been improved since our initial release. If you want to check out our original results, please checkout commit [f4fd589](https://github.com/tianzhi0549/FCOS/tree/f4fd58966f45e64608c00b072c801de7f86b4f3a)*. \
-[5] *`c128` denotes the model has 128 (instead of 256) channels in towers (i.e., `MODEL.RESNETS.BACKBONE_OUT_CHANNELS` in [config](https://github.com/tianzhi0549/FCOS/blob/master/configs/fcos/fcos_syncbn_bs32_c128_MNV2_FPN_1x.yaml#L10)).*
+[2] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
+[3] *`c128` denotes the model has 128 (instead of 256) channels in towers (i.e., `MODEL.RESNETS.BACKBONE_OUT_CHANNELS` in [config](https://github.com/tianzhi0549/FCOS/blob/master/configs/fcos/fcos_syncbn_bs32_c128_MNV2_FPN_1x.yaml#L10)).* \
+[4] *The model `FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x` with multi-scale testing achieves 49.0% in AP on COCO test-dev.* Please use `TEST.BBOX_AUG.ENABLED True` to enable multi-scale testing. 
 ## Training
 
 The following command line will train FCOS_R_50_FPN_1x on 8 GPUs with Synchronous Stochastic Gradient Descent (SGD):
@@ -120,6 +129,7 @@ Note that:
 3) If you want to train FCOS with other backbones, please change `--config-file`.
 4) The link of ImageNet pre-training X-101-64x4d in the code is invalid. Please download the model [here](https://cloudstor.aarnet.edu.au/plus/s/k3ys35075jmU1RP/download).
 5) If you want to train FCOS on your own dataset, please follow this instruction [#54](https://github.com/tianzhi0549/FCOS/issues/54#issuecomment-497558687).
+6) Now, training with 8 GPUs and 4 GPUs can have the same performance. Previous performance gap was because we did not synchronize `num_pos` between GPUs when computing loss. 
 ## Contributing to the project
 
 Any pull requests or issues are welcome.
@@ -135,6 +145,8 @@ Please consider citing our paper in your publications if the project helps your 
 }
 ```
 
+# Acknowledgments
+We would like to thank [@yqyao](https://github.com/yqyao) for the tricks of center sampling and GIoU.  We also thank [@bearcatt](https://github.com/bearcatt) for his suggestion of positioning the center-ness branch with box regression (refer to [#89](https://github.com/tianzhi0549/FCOS/issues/89#issuecomment-516877042)).    
 
 ## License
 

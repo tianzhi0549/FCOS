@@ -248,6 +248,7 @@ class FCOSLossComputation(object):
         num_pos_per_gpu = pos_inds.numel()
         num_gpus = get_num_gpus()
         if num_gpus > 1:
+            # sync num_pos from all gpus
             total_num_pos = reduce_sum(pos_inds.new_tensor([num_pos_per_gpu])).item()
         else:
             total_num_pos = num_pos_per_gpu
@@ -262,6 +263,7 @@ class FCOSLossComputation(object):
 
             sum_centerness_targets = centerness_targets.sum()
             if num_gpus > 1:
+                # sync sum_centerness_targets from all gpus
                 sum_centerness_targets = reduce_sum(sum_centerness_targets).item()
             else:
                 sum_centerness_targets = sum_centerness_targets.item()

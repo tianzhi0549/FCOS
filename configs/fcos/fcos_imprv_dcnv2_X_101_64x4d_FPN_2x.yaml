@@ -10,7 +10,7 @@ MODEL:
     BACKBONE_OUT_CHANNELS: 256
     NUM_GROUPS: 64
     WIDTH_PER_GROUP: 4
-    STAGE_WITH_DCN: (False, True, True, True)
+    STAGE_WITH_DCN: (False, False, True, True)
     WITH_MODULATED_DCN: True
     DEFORMABLE_GROUPS: 1
   RETINANET:
@@ -25,6 +25,8 @@ MODEL:
     # Please refer to https://github.com/yqyao/FCOS_PLUS
     CENTER_SAMPLING_RADIUS: 1.5
     IOU_LOSS_TYPE: "giou"
+    # we only use dcn in the last layer of towers
+    USE_DCN_IN_TOWER: True
 DATASETS:
   TRAIN: ("coco_2014_train", "coco_2014_valminusminival")
   TEST: ("coco_2014_minival",)
