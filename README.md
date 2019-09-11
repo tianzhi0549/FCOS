@@ -112,7 +112,7 @@ FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 59ms | 31.0 | [download](https://cloudstor.
 [4] *The model `FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x` with multi-scale testing achieves 49.0% in AP on COCO test-dev.* Please use `TEST.BBOX_AUG.ENABLED True` to enable multi-scale testing. 
 ## Training
 
-The following command line will train FCOS_R_50_FPN_1x on 8 GPUs with Synchronous Stochastic Gradient Descent (SGD):
+The following command line will train FCOS_imprv_R_50_FPN_1x on 8 GPUs with Synchronous Stochastic Gradient Descent (SGD):
 
     python -m torch.distributed.launch \
         --nproc_per_node=8 \
