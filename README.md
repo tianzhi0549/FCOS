@@ -95,7 +95,7 @@ FCOS_imprv_dcnv2_X_101_32x8d_FPN_2x | Yes | 157ms | 46.4 | [download](https://cl
 FCOS_imprv_X_101_64x4d_FPN_2x | Yes | 133ms | 44.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/rKOJtwvJwcKVOz8/download)
 FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x | Yes | 160ms | 46.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/jdtVmG7MlugEXB7/download)
 
-*Note that `imprv` denotes `improvements` in our paper Table 3. These almost cost-free changes improve the performance by ~1.5% in total. Thus, we highly recommend to use them. The following are original models presented in our initial paper.*
+*Note that `imprv` denotes `improvements` in our paper Table 3. These almost cost-free changes improve the performance by ~1.5% in total. Thus, we highly recommend to use them. The following are the original models presented in our initial paper.*
 
 Model | Multi-scale training | Testing time / im | AP (minival) | AP (test-dev) | Link
 --- |:---:|:---:|:---:|:---:|:---:
