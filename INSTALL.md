@@ -6,7 +6,7 @@
 - cocoapi
 - yacs
 - matplotlib
-- GCC >= 4.9
+- GCC >= 4.9 but <= 6.0
 - (optional) OpenCV for the webcam demo
 
 ### Option 1: Step-by-step installation
@@ -46,7 +46,7 @@ cd FCOS
 # symbolic links, so that you can modify
 # the files if you want and won't need to
 # re-build it
-python setup.py build develop
+python setup.py build develop --no-deps
 
 
 unset INSTALL_DIR
