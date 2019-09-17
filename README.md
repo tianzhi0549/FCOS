@@ -110,9 +110,9 @@ FCOS_X_101_64x4d_FPN_2x | Yes | 135ms | 43.0 | 43.2 | [download](https://cloudst
 
 Model | Training batch size | Multi-scale training | Testing time / im | AP (minival) | Link
 --- |:---:|:---:|:---:|:---:|:---:
-FCOS_syncbn_bs32_c128_MNV2_FPN_1x | 32 | No | 19ms | 30.9 | [download](https://cloudstor.aarnet.edu.au/plus/s/3GKwaxZhDSOlCZ0/download)
-FCOS_syncbn_bs32_MNV2_FPN_1x | 32 | No | 59ms | 33.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/OpJtCJLj104i2Yc/download)
-FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 59ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
+FCOS_syncbn_bs32_c128_MNV2_FPN_1x | 32 | No | 45ms | 30.9 | [download](https://cloudstor.aarnet.edu.au/plus/s/3GKwaxZhDSOlCZ0/download)
+FCOS_syncbn_bs32_MNV2_FPN_1x | 32 | No | 52ms | 33.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/OpJtCJLj104i2Yc/download)
+FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 52ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
 
 [1] *1x and 2x mean the model is trained for 90K and 180K iterations, respectively.* \
 [2] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
