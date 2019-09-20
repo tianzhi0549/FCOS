@@ -105,8 +105,8 @@ class FCOSHead(torch.nn.Module):
 
             bbox_pred = self.scales[l](self.bbox_pred(box_tower))
             if self.norm_reg_targets:
+                bbox_pred = F.relu(bbox_pred)
                 if self.training:
-                    bbox_pred = F.relu(bbox_pred)
                     bbox_reg.append(bbox_pred)
                 else:
                     bbox_reg.append(bbox_pred * self.fpn_strides[l])
