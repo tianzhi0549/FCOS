@@ -11,28 +11,17 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
-- **Better performance:** The very simple one-stage detector achieves much better performance (38.7 vs. 36.8 in AP with ResNet-50) than Faster R-CNN.
+- **Better performance:** The very simple one-stage detector achieves much better performance (38.7 vs. 36.8 in AP with ResNet-50) than Faster R-CNN. Check out more models and experimental results [here](https://github.com/tianzhi0549/FCOS#models).
 - **Faster training:** With the same hardwares, FCOS also requires less training hours (6.5h vs. 8.8h) than Faster R-CNN.
 - **State-of-the-art performance:** Our best model based on ResNeXt-64x4d-101 and deformable convolutions achieves **49.0%** in AP on COCO test-dev (with multi-scale testing).
 
 ## Updates
-### 11 September 2019
-   - New models with much improved performance are released. The best model achieves **49%** in AP on COCO test-dev with multi-scale testing.
-    
-### 8 August 2019
-   - FCOS with VoVNet backbones is available at [VoVNet-FCOS](https://github.com/vov-net/VoVNet-FCOS).
-   
-### 23 July 2019
-   - A trick of using a small central region of the BBox for training improves AP by nearly 1 point [as shown here](https://github.com/yqyao/FCOS_PLUS).
-
-### 3 July 2019
-   - FCOS with HRNet backbones is available at [HRNet-FCOS](https://github.com/HRNet/HRNet-FCOS).
-    
-### 30 June 2019
-   - FCOS with AutoML searched FPN (R50, R101, ResNeXt101 and MobileNetV2 backbones) is available at [NAS-FCOS](https://github.com/Lausannen/NAS-FCOS).
-    
-### 17 May 2019
-   - FCOS has been implemented in [mmdetection](https://github.com/open-mmlab/mmdetection). Many thanks to [@yhcao6](https://github.com/yhcao6) and [@hellock](https://github.com/hellock).
+   - New models with much improved performance are released. The best model achieves **49%** in AP on COCO test-dev with multi-scale testing. (11/09/2019)
+   - FCOS with VoVNet backbones is available at [VoVNet-FCOS](https://github.com/vov-net/VoVNet-FCOS). (08/08/2019)
+   - A trick of using a small central region of the BBox for training improves AP by nearly 1 point [as shown here](https://github.com/yqyao/FCOS_PLUS). (23/07/2019)
+   - FCOS with HRNet backbones is available at [HRNet-FCOS](https://github.com/HRNet/HRNet-FCOS). (03/07/2019)
+   - FCOS with AutoML searched FPN (R50, R101, ResNeXt101 and MobileNetV2 backbones) is available at [NAS-FCOS](https://github.com/Lausannen/NAS-FCOS). (30/06/2019)
+   - FCOS has been implemented in [mmdetection](https://github.com/open-mmlab/mmdetection). Many thanks to [@yhcao6](https://github.com/yhcao6) and [@hellock](https://github.com/hellock). (17/05/2019)
 
 ## Required hardware
 We use 8 Nvidia V100 GPUs. \
@@ -78,6 +67,7 @@ Please note that:
 3) If you want to evaluate a different model, please change `--config-file` to its config file (in [configs/fcos](configs/fcos)) and `MODEL.WEIGHT` to its weights file.
 4) Multi-GPU inference is available, please refer to [#78](https://github.com/tianzhi0549/FCOS/issues/78#issuecomment-526990989).
 
+## Models
 For your convenience, we provide the following trained models (more models are coming soon).
 
 **ResNe(x)ts:**
