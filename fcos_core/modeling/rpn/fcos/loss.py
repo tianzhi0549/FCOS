@@ -24,6 +24,8 @@ def get_num_gpus():
 
 
 def reduce_sum(tensor):
+    if get_num_gpus() <= 1:
+        return tensor
     import torch.distributed as dist
     tensor = tensor.clone()
     dist.all_reduce(tensor, op=dist.reduce_op.SUM)
@@ -245,38 +247,33 @@ class FCOSLossComputation(object):
         reg_targets_flatten = reg_targets_flatten[pos_inds]
         centerness_flatten = centerness_flatten[pos_inds]
 
-        num_pos_per_gpu = pos_inds.numel()
         num_gpus = get_num_gpus()
-        if num_gpus > 1:
-            # sync num_pos from all gpus
-            total_num_pos = reduce_sum(pos_inds.new_tensor([num_pos_per_gpu])).item()
-        else:
-            total_num_pos = num_pos_per_gpu
+        # sync num_pos from all gpus
+        total_num_pos = reduce_sum(pos_inds.new_tensor([pos_inds.numel()])).item()
+        num_pos_avg_per_gpu = max(total_num_pos / float(num_gpus), 1.0)
 
         cls_loss = self.cls_loss_func(
             box_cls_flatten,
             labels_flatten.int()
-        ) / max(total_num_pos / float(num_gpus), 1.0)
+        ) / num_pos_avg_per_gpu
 
         if pos_inds.numel() > 0:
             centerness_targets = self.compute_centerness_targets(reg_targets_flatten)
 
-            sum_centerness_targets = centerness_targets.sum()
-            if num_gpus > 1:
-                # sync sum_centerness_targets from all gpus
-                sum_centerness_targets = reduce_sum(sum_centerness_targets).item()
-            else:
-                sum_centerness_targets = sum_centerness_targets.item()
+            # average sum_centerness_targets from all gpus,
+            # which is used to normalize centerness-weighed reg loss
+            sum_centerness_targets_avg_per_gpu = \
+                reduce_sum(centerness_targets.sum()).item() / float(num_gpus)
 
             reg_loss = self.box_reg_loss_func(
                 box_regression_flatten,
                 reg_targets_flatten,
                 centerness_targets
-            ) / (sum_centerness_targets / float(num_gpus))
+            ) / sum_centerness_targets_avg_per_gpu
             centerness_loss = self.centerness_loss_func(
                 centerness_flatten,
                 centerness_targets
-            ) / max(total_num_pos / float(num_gpus), 1.0)
+            ) / num_pos_avg_per_gpu
         else:
             reg_loss = box_regression_flatten.sum()
             reduce_sum(centerness_flatten.new_tensor([0.0]))
