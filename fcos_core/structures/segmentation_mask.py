@@ -1,5 +1,5 @@
 import cv2
-
+import copy
 import torch
 import numpy as np
 from fcos_core.layers.misc import interpolate
@@ -195,7 +195,7 @@ class PolygonInstance(object):
             polygons = valid_polygons
 
         elif isinstance(polygons, PolygonInstance):
-            polygons = [p.clone() for p in polygons.polygons]
+            polygons = copy.copy(polygons.polygons)
         else:
             RuntimeError(
                 "Type of argument `polygons` is not allowed:%s" % (type(polygons))
@@ -414,7 +414,8 @@ class PolygonList(object):
         else:
             # advanced indexing on a single dimension
             selected_polygons = []
-            if isinstance(item, torch.Tensor) and item.dtype == torch.uint8:
+            if isinstance(item, torch.Tensor) and \
+               item.dtype == torch.uint8 or item.dtype == torch.bool:
                 item = item.nonzero()
                 item = item.squeeze(1) if item.numel() > 0 else item
                 item = item.tolist()
@@ -522,7 +523,9 @@ class SegmentationMask(object):
             next_segmentation = self.__getitem__(self.iter_idx)
             self.iter_idx += 1
             return next_segmentation
-        raise StopIteration
+        raise StopIteration()
+        
+    next = __next__  # Python 2 compatibility
 
     def __repr__(self):
         s = self.__class__.__name__ + "("

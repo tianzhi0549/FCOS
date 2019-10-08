@@ -57,9 +57,12 @@ class Resize(object):
     def __call__(self, image, target=None):
         size = self.get_size(image.size)
         image = F.resize(image, size)
-        if target is None:
+        if isinstance(target, list):
+            target = [t.resize(image.size) for t in target]
+        elif target is None:
             return image
-        target = target.resize(image.size)
+        else:
+            target = target.resize(image.size)
         return image, target
 
 
