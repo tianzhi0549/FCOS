@@ -7,7 +7,7 @@ from fcos_core.modeling.box_coder import BoxCoder
 from fcos_core.modeling.utils import cat
 from fcos_core.structures.bounding_box import BoxList
 from fcos_core.structures.boxlist_ops import cat_boxlist
-from fcos_core.structures.boxlist_ops import boxlist_nms
+from fcos_core.structures.boxlist_ops import boxlist_ml_nms
 from fcos_core.structures.boxlist_ops import remove_small_boxes
 
 
@@ -146,32 +146,8 @@ class FCOSPostProcessor(torch.nn.Module):
         num_images = len(boxlists)
         results = []
         for i in range(num_images):
-            scores = boxlists[i].get_field("scores")
-            labels = boxlists[i].get_field("labels")
-            boxes = boxlists[i].bbox
-            boxlist = boxlists[i]
-            result = []
-            # skip the background
-            for j in range(1, self.num_classes):
-                inds = (labels == j).nonzero().view(-1)
-
-                scores_j = scores[inds]
-                boxes_j = boxes[inds, :].view(-1, 4)
-                boxlist_for_class = BoxList(boxes_j, boxlist.size, mode="xyxy")
-                boxlist_for_class.add_field("scores", scores_j)
-                boxlist_for_class = boxlist_nms(
-                    boxlist_for_class, self.nms_thresh,
-                    score_field="scores"
-                )
-                num_labels = len(boxlist_for_class)
-                boxlist_for_class.add_field(
-                    "labels", torch.full((num_labels,), j,
-                                         dtype=torch.int64,
-                                         device=scores.device)
-                )
-                result.append(boxlist_for_class)
-
-            result = cat_boxlist(result)
+            # multiclass nms
+            result = boxlist_ml_nms(boxlists[i], self.nms_thresh)
             number_of_detections = len(result)
 
             # Limit to max_per_image detections **over all classes**
