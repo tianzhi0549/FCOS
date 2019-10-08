@@ -4,10 +4,10 @@ import unittest
 import copy
 import torch
 # import modules to to register rpn heads
-from maskrcnn_benchmark.modeling.backbone import build_backbone # NoQA
-from maskrcnn_benchmark.modeling.rpn.rpn import build_rpn # NoQA
-from maskrcnn_benchmark.modeling import registry
-from maskrcnn_benchmark.config import cfg as g_cfg
+from fcos_core.modeling.backbone import build_backbone # NoQA
+from fcos_core.modeling.rpn.rpn import build_rpn # NoQA
+from fcos_core.modeling import registry
+from fcos_core.config import cfg as g_cfg
 from utils import load_config
 
 

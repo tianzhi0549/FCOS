@@ -5,31 +5,37 @@ Basic training script for PyTorch
 
 # Set up custom environment before nearly anything else is imported
 # NOTE: this should be the first import (no not reorder)
-from maskrcnn_benchmark.utils.env import setup_environment  # noqa F401 isort:skip
+from fcos_core.utils.env import setup_environment  # noqa F401 isort:skip
 
 import argparse
 import os
 
 import torch
-from maskrcnn_benchmark.config import cfg
-from maskrcnn_benchmark.data import make_data_loader
-from maskrcnn_benchmark.solver import make_lr_scheduler
-from maskrcnn_benchmark.solver import make_optimizer
-from maskrcnn_benchmark.engine.inference import inference
-from maskrcnn_benchmark.engine.trainer import do_train
-from maskrcnn_benchmark.modeling.detector import build_detection_model
-from maskrcnn_benchmark.utils.checkpoint import DetectronCheckpointer
-from maskrcnn_benchmark.utils.collect_env import collect_env_info
-from maskrcnn_benchmark.utils.comm import synchronize, get_rank
-from maskrcnn_benchmark.utils.imports import import_file
-from maskrcnn_benchmark.utils.logger import setup_logger
-from maskrcnn_benchmark.utils.miscellaneous import mkdir
+from fcos_core.config import cfg
+from fcos_core.data import make_data_loader
+from fcos_core.solver import make_lr_scheduler
+from fcos_core.solver import make_optimizer
+from fcos_core.engine.inference import inference
+from fcos_core.engine.trainer import do_train
+from fcos_core.modeling.detector import build_detection_model
+from fcos_core.utils.checkpoint import DetectronCheckpointer
+from fcos_core.utils.collect_env import collect_env_info
+from fcos_core.utils.comm import synchronize, \
+    get_rank, is_pytorch_1_1_0_or_later
+from fcos_core.utils.imports import import_file
+from fcos_core.utils.logger import setup_logger
+from fcos_core.utils.miscellaneous import mkdir
 
 
 def train(cfg, local_rank, distributed):
     model = build_detection_model(cfg)
     device = torch.device(cfg.MODEL.DEVICE)
     model.to(device)
+
+    if cfg.MODEL.USE_SYNCBN:
+        assert is_pytorch_1_1_0_or_later(), \
+            "SyncBatchNorm is only available in pytorch >= 1.1.0"
+        model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
 
     optimizer = make_optimizer(cfg, model)
     scheduler = make_lr_scheduler(cfg, optimizer)
@@ -151,7 +157,7 @@ def main():
     if output_dir:
         mkdir(output_dir)
 
-    logger = setup_logger("maskrcnn_benchmark", output_dir, get_rank())
+    logger = setup_logger("fcos_core", output_dir, get_rank())
     logger.info("Using {} GPUs".format(num_gpus))
     logger.info(args)
 

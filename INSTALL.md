@@ -1,14 +1,13 @@
 ## Installation
 
 ### Requirements:
-- PyTorch 1.0 from a nightly release. It **will not** work with 1.0 nor 1.0.1. Installation instructions can be found in https://pytorch.org/get-started/locally/
-- torchvision from master
+- PyTorch >= 1.0. Installation instructions can be found in https://pytorch.org/get-started/locally/.
+- torchvision==0.2.1
 - cocoapi
 - yacs
 - matplotlib
-- GCC >= 4.9
+- GCC >= 4.9,< 6.0
 - (optional) OpenCV for the webcam demo
-
 
 ### Option 1: Step-by-step installation
 
@@ -28,11 +27,11 @@ pip install ninja yacs cython matplotlib tqdm
 
 # follow PyTorch installation in https://pytorch.org/get-started/locally/
 # we give the instructions for CUDA 9.0
-conda install -c pytorch pytorch-nightly torchvision cudatoolkit=9.0
+conda install -c pytorch torchvision=0.2.1 cudatoolkit=9.0
 
 export INSTALL_DIR=$PWD
 
-# install pycocotools
+# install pycocotools. Please make sure you have installed cython.
 cd $INSTALL_DIR
 git clone https://github.com/cocodataset/cocoapi.git
 cd cocoapi/PythonAPI
@@ -47,7 +46,7 @@ cd FCOS
 # symbolic links, so that you can modify
 # the files if you want and won't need to
 # re-build it
-python setup.py build develop
+python setup.py build develop --no-deps
 
 
 unset INSTALL_DIR

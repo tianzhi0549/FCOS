@@ -4,7 +4,7 @@ import unittest
 
 import numpy as np
 import torch
-from maskrcnn_benchmark.modeling.box_coder import BoxCoder
+from fcos_core.modeling.box_coder import BoxCoder
 
 
 class TestBoxCoder(unittest.TestCase):

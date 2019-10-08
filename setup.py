@@ -1,5 +1,5 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 #!/usr/bin/env python
+# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 import glob
 import os
@@ -11,18 +11,27 @@ from torch.utils.cpp_extension import CUDA_HOME
 from torch.utils.cpp_extension import CppExtension
 from torch.utils.cpp_extension import CUDAExtension
 
-requirements = ["torch", "torchvision"]
+
+requirements = [
+    "torchvision",
+    "ninja",
+    "yacs",
+    "cython",
+    "matplotlib",
+    "tqdm",
+    "opencv-python",
+    "scikit-image"
+]
 
 
 def get_extensions():
-    this_dir = os.path.dirname(os.path.abspath(__file__))
-    extensions_dir = os.path.join(this_dir, "maskrcnn_benchmark", "csrc")
+    extensions_dir = os.path.join("fcos_core", "csrc")
 
     main_file = glob.glob(os.path.join(extensions_dir, "*.cpp"))
     source_cpu = glob.glob(os.path.join(extensions_dir, "cpu", "*.cpp"))
     source_cuda = glob.glob(os.path.join(extensions_dir, "cuda", "*.cu"))
-
     sources = main_file + source_cpu
+
     extension = CppExtension
 
     extra_compile_args = {"cxx": []}
@@ -39,17 +48,15 @@ def get_extensions():
             "-D__CUDA_NO_HALF2_OPERATORS__",
         ]
 
-    sources = [os.path.join(extensions_dir, s) for s in sources]
-
     include_dirs = [extensions_dir]
 
     ext_modules = [
         extension(
-            "maskrcnn_benchmark._C",
+            "fcos_core._C",
             sources,
             include_dirs=include_dirs,
             define_macros=define_macros,
-            extra_compile_args=extra_compile_args,
+            extra_compile_args=extra_compile_args
         )
     ]
 
@@ -57,13 +64,15 @@ def get_extensions():
 
 
 setup(
-    name="maskrcnn_benchmark",
-    version="0.1",
-    author="fmassa",
-    url="https://github.com/facebookresearch/maskrcnn-benchmark",
-    description="object detection in pytorch",
+    name="fcos",
+    version="0.1.9",
+    author="Zhi Tian",
+    url="https://github.com/tianzhi0549/FCOS",
+    description="FCOS object detector in pytorch",
+    scripts=["fcos/bin/fcos"],
     packages=find_packages(exclude=("configs", "tests",)),
-    # install_requires=requirements,
+    install_requires=requirements,
     ext_modules=get_extensions(),
     cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
+    include_package_data=True,
 )

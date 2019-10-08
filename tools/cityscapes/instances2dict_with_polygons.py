@@ -13,7 +13,7 @@ from csHelpers import *
 from cityscapesscripts.evaluation.instance import *
 from cityscapesscripts.helpers.csHelpers import *
 import cv2
-from maskrcnn_benchmark.utils import cv2_util
+from fcos_core.utils import cv2_util
 
 
 def instances2dict_with_polygons(imageFileList, verbose=False):

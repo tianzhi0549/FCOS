@@ -1,0 +1,30 @@
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  WEIGHT: "https://cloudstor.aarnet.edu.au/plus/s/xtixKaxLWmbcyf7/download#mobilenet_v2-ecbe2b5.pth"
+  RPN_ONLY: True
+  FCOS_ON: True
+  BACKBONE:
+    CONV_BODY: "MNV2-FPN-RETINANET"
+    FREEZE_CONV_BODY_AT: 0
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 128
+  RETINANET:
+    USE_C5: False # FCOS uses P5 instead of C5
+  USE_SYNCBN: True
+DATASETS:
+  TRAIN: ("coco_2014_train", "coco_2014_valminusminival")
+  TEST: ("coco_2014_minival",)
+INPUT:
+  MIN_SIZE_RANGE_TRAIN: (640, 800)
+  MAX_SIZE_TRAIN: 1333
+  MIN_SIZE_TEST: 800
+  MAX_SIZE_TEST: 1333
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+SOLVER:
+  BASE_LR: 0.01
+  WEIGHT_DECAY: 0.0001
+  STEPS: (60000, 80000)
+  MAX_ITER: 90000
+  IMS_PER_BATCH: 64
+  WARMUP_METHOD: "constant"
