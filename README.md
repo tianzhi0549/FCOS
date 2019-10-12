@@ -16,7 +16,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 - **State-of-the-art performance:** Our best model based on ResNeXt-64x4d-101 and deformable convolutions achieves **49.0%** in AP on COCO test-dev (with multi-scale testing).
 
 ## Updates
-   - New NMS speeds up ResNe(x)t based models by up to 30% and MobileNet based models by 40%, with exactly the same performance. Check out [here](#models). (12/10/2019)
+   - New NMS (see [#165](https://github.com/tianzhi0549/FCOS/pull/165)) speeds up ResNe(x)t based models by up to 30% and MobileNet based models by 40%, with exactly the same performance. Check out [here](#models). (12/10/2019)
    - New models with much improved performance are released. The best model achieves **49%** in AP on COCO test-dev with multi-scale testing. (11/09/2019)
    - FCOS with VoVNet backbones is available at [VoVNet-FCOS](https://github.com/vov-net/VoVNet-FCOS). (08/08/2019)
    - A trick of using a small central region of the BBox for training improves AP by nearly 1 point [as shown here](https://github.com/yqyao/FCOS_PLUS). (23/07/2019)
