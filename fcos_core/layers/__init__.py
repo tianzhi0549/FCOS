@@ -7,7 +7,7 @@ from .misc import DFConv2d
 from .misc import ConvTranspose2d
 from .misc import BatchNorm2d
 from .misc import interpolate
-from .nms import nms
+from .nms import nms, ml_nms
 from .roi_align import ROIAlign
 from .roi_align import roi_align
 from .roi_pool import ROIPool
@@ -26,6 +26,7 @@ from .dcn.deform_pool_module import DeformRoIPooling, DeformRoIPoolingPack, \
 
 __all__ = [
     "nms",
+    "ml_nms",
     "roi_align",
     "ROIAlign",
     "roi_pool",
