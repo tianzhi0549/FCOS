@@ -66,6 +66,7 @@ Please note that:
 2) If you enounter out-of-memory error, please try to reduce `TEST.IMS_PER_BATCH` to 1.
 3) If you want to evaluate a different model, please change `--config-file` to its config file (in [configs/fcos](configs/fcos)) and `MODEL.WEIGHT` to its weights file.
 4) Multi-GPU inference is available, please refer to [#78](https://github.com/tianzhi0549/FCOS/issues/78#issuecomment-526990989).
+5) We improved the postprocess efficiency by using multi-label nms (see [#165](https://github.com/tianzhi0549/FCOS/pull/165)), which saves 18ms on average. The inference metric in the following tables has been updated accordingly.
 
 ## Models
 For your convenience, we provide the following trained models (more models are coming soon).
@@ -76,23 +77,23 @@ For your convenience, we provide the following trained models (more models are c
 
 Model | Multi-scale training | Testing time / im | AP (minival) | Link
 --- |:---:|:---:|:---:|:---:
-FCOS_imprv_R_50_FPN_1x | No | 62ms | 38.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/ZSAqNJB96hA71Yf/download)
-FCOS_imprv_dcnv2_R_50_FPN_1x | No | 70ms | 42.3 | [download](https://cloudstor.aarnet.edu.au/plus/s/plKgHuykjiilzWr/download)
-FCOS_imprv_R_101_FPN_2x | Yes | 76ms | 43.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/hTeMuRa4pwtCemq/download)
-FCOS_imprv_dcnv2_R_101_FPN_2x | Yes | 89ms | 45.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/xq2Ll7s0hpaQycO/download)
-FCOS_imprv_X_101_32x8d_FPN_2x | Yes | 130ms | 44.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/WZ0i7RZW5BRpJu6/download)
-FCOS_imprv_dcnv2_X_101_32x8d_FPN_2x | Yes | 157ms | 46.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/08UK0OP67TogLCU/download)
-FCOS_imprv_X_101_64x4d_FPN_2x | Yes | 133ms | 44.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/rKOJtwvJwcKVOz8/download)
-FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x | Yes | 160ms | 46.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/jdtVmG7MlugEXB7/download)
+FCOS_imprv_R_50_FPN_1x | No | 44ms | 38.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/ZSAqNJB96hA71Yf/download)
+FCOS_imprv_dcnv2_R_50_FPN_1x | No | 54ms | 42.3 | [download](https://cloudstor.aarnet.edu.au/plus/s/plKgHuykjiilzWr/download)
+FCOS_imprv_R_101_FPN_2x | Yes | 57ms | 43.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/hTeMuRa4pwtCemq/download)
+FCOS_imprv_dcnv2_R_101_FPN_2x | Yes | 73ms | 45.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/xq2Ll7s0hpaQycO/download)
+FCOS_imprv_X_101_32x8d_FPN_2x | Yes | 110ms | 44.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/WZ0i7RZW5BRpJu6/download)
+FCOS_imprv_dcnv2_X_101_32x8d_FPN_2x | Yes | 143ms | 46.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/08UK0OP67TogLCU/download)
+FCOS_imprv_X_101_64x4d_FPN_2x | Yes | 112ms | 44.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/rKOJtwvJwcKVOz8/download)
+FCOS_imprv_dcnv2_X_101_64x4d_FPN_2x | Yes | 144ms | 46.6 | [download](https://cloudstor.aarnet.edu.au/plus/s/jdtVmG7MlugEXB7/download)
 
 *Note that `imprv` denotes `improvements` in our paper Table 3. These almost cost-free changes improve the performance by ~1.5% in total. Thus, we highly recommend to use them. The following are the original models presented in our initial paper.*
 
 Model | Multi-scale training | Testing time / im | AP (minival) | AP (test-dev) | Link
 --- |:---:|:---:|:---:|:---:|:---:
-FCOS_R_50_FPN_1x | No | 64ms | 37.1 | 37.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
-FCOS_R_101_FPN_2x | Yes | 78ms | 41.4 | 41.5 | [download](https://cloudstor.aarnet.edu.au/plus/s/vjL3L0AW7vnhRTo/download)
-FCOS_X_101_32x8d_FPN_2x | Yes | 132ms | 42.5 | 42.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
-FCOS_X_101_64x4d_FPN_2x | Yes | 135ms | 43.0 | 43.2 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
+FCOS_R_50_FPN_1x | No | 45ms | 37.1 | 37.4 | [download](https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download)
+FCOS_R_101_FPN_2x | Yes | 59ms | 41.4 | 41.5 | [download](https://cloudstor.aarnet.edu.au/plus/s/vjL3L0AW7vnhRTo/download)
+FCOS_X_101_32x8d_FPN_2x | Yes | 110ms | 42.5 | 42.7 | [download](https://cloudstor.aarnet.edu.au/plus/s/U5myBfGF7MviZ97/download)
+FCOS_X_101_64x4d_FPN_2x | Yes | 113ms | 43.0 | 43.2 | [download](https://cloudstor.aarnet.edu.au/plus/s/wpwoCi4S8iajFi9/download)
 
 **MobileNets:**
 
@@ -100,9 +101,9 @@ FCOS_X_101_64x4d_FPN_2x | Yes | 135ms | 43.0 | 43.2 | [download](https://cloudst
 
 Model | Training batch size | Multi-scale training | Testing time / im | AP (minival) | Link
 --- |:---:|:---:|:---:|:---:|:---:
-FCOS_syncbn_bs32_c128_MNV2_FPN_1x | 32 | No | 45ms | 30.9 | [download](https://cloudstor.aarnet.edu.au/plus/s/3GKwaxZhDSOlCZ0/download)
-FCOS_syncbn_bs32_MNV2_FPN_1x | 32 | No | 52ms | 33.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/OpJtCJLj104i2Yc/download)
-FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 52ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
+FCOS_syncbn_bs32_c128_MNV2_FPN_1x | 32 | No | 26ms | 30.9 | [download](https://cloudstor.aarnet.edu.au/plus/s/3GKwaxZhDSOlCZ0/download)
+FCOS_syncbn_bs32_MNV2_FPN_1x | 32 | No | 33ms | 33.1 | [download](https://cloudstor.aarnet.edu.au/plus/s/OpJtCJLj104i2Yc/download)
+FCOS_bn_bs16_MNV2_FPN_1x | 16 | No | 44ms | 31.0 | [download](https://cloudstor.aarnet.edu.au/plus/s/B6BrLAiAEAYQkcy/download)
 
 [1] *1x and 2x mean the model is trained for 90K and 180K iterations, respectively.* \
 [2] *All results are obtained with a single model and without any test time data augmentation such as multi-scale, flipping and etc..* \
