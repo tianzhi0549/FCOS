@@ -12,7 +12,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
 - **Better performance:** The very simple one-stage detector achieves much better performance (38.7 vs. 36.8 in AP with ResNet-50) than Faster R-CNN. Check out more models and experimental results [here](#models).
-- **Faster training:** With the same hardwares, FCOS also requires less training hours (6.5h vs. 8.8h) than Faster R-CNN.
+- **Faster training and testing:** With the same hardwares and backbone ResNet-50-FPN, FCOS also requires less training hours (6.5h vs. 8.8h) than Faster R-CNN. FCOS also takes 12ms less inference time per image than Faster R-CNN (44ms vs. 56ms).
 - **State-of-the-art performance:** Our best model based on ResNeXt-64x4d-101 and deformable convolutions achieves **49.0%** in AP on COCO test-dev (with multi-scale testing).
 
 ## Updates
