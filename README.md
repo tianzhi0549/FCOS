@@ -33,7 +33,7 @@ But 4 1080Ti GPUs can also train a fully-fledged ResNet-50-FPN based FCOS since 
 For users who only want to use FCOS as an object detector in their projects, they can install it by pip. To do so, run:
 ```
 pip install torch  # install pytorch if you do not have it
-pip install fcos
+pip install git+https://github.com/tianzhi0549/FCOS.git
 # run this command line for a demo 
 fcos https://github.com/tianzhi0549/FCOS/raw/master/demo/images/COCO_val2014_000000000885.jpg
 ```
