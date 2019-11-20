@@ -1,6 +1,6 @@
 """
 An example:
-python tools/test_fcos_onnx_model.py --onnx-model fcos_imprv_R_50_FPN_1x.onnx --config-file configs/fcos/fcos_imprv_R_50_FPN_1x.yaml TEST.IMS_PER_BATCH 1 INPUT.MIN_SIZE_TEST 384 DATALOADER.NUM_WORKERS 0
+python tools/test_fcos_onnx_model.py --onnx-model fcos_imprv_R_50_FPN_1x.onnx --config-file configs/fcos/fcos_imprv_R_50_FPN_1x.yaml TEST.IMS_PER_BATCH 1 DATALOADER.NUM_WORKERS 0
 
 """
 from fcos_core.utils.env import setup_environment  # noqa F401 isort:skip
