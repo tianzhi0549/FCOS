@@ -1,5 +1,5 @@
 """
-Please make sure you are using pytorch >= 1.4.0.
+Please make sure you are using pytorch >= 1.4.0 (or nightly).
 A working example to export the R-50 based FCOS model:
 python onnx/export_model_to_onnx.py \
     --config-file configs/fcos/fcos_imprv_R_50_FPN_1x.yaml \

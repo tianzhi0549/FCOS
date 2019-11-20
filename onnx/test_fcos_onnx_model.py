@@ -1,6 +1,6 @@
 """
 An example:
-Please make sure you are using torchvision >= 0.5.0.
+Please make sure you are using torchvision >= 0.5.0 (or nightly).
 
 wget https://cloudstor.aarnet.edu.au/plus/s/38fQAdi2HBkn274/download -O fcos_imprv_R_50_FPN_1x.onnx
 python onnx/test_fcos_onnx_model.py \
