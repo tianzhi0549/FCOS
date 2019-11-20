@@ -9,7 +9,6 @@ from fcos_core.structures.bounding_box import BoxList
 from fcos_core.structures.boxlist_ops import cat_boxlist
 from fcos_core.structures.boxlist_ops import boxlist_ml_nms
 from fcos_core.structures.boxlist_ops import remove_small_boxes
-from torchvision.ops.boxes import batched_nms
 
 
 class FCOSPostProcessor(torch.nn.Module):
@@ -148,13 +147,7 @@ class FCOSPostProcessor(torch.nn.Module):
         results = []
         for i in range(num_images):
             # multiclass nms
-            keep = batched_nms(
-                boxlists[i].bbox,
-                boxlists[i].get_field("scores"),
-                boxlists[i].get_field("labels"),
-                self.nms_thresh
-            )
-            result = boxlists[i][keep]
+            result = boxlist_ml_nms(boxlists[i], self.nms_thresh)
             number_of_detections = len(result)
 
             # Limit to max_per_image detections **over all classes**
