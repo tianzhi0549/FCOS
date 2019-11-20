@@ -21,6 +21,7 @@ from fcos_core.utils.miscellaneous import mkdir
 from fcos_core.modeling.rpn.fcos.inference import make_fcos_postprocessor
 import caffe2.python.onnx.backend as backend
 import numpy as np
+from fcos_core.structures.image_list import to_image_list
 
 
 class ONNX_FCOS(nn.Module):
@@ -37,9 +38,10 @@ class ONNX_FCOS(nn.Module):
     def forward(self, images):
         outputs = self.onnx_model.run(images.tensors.cpu().numpy())
         outputs = [torch.from_numpy(o).to(self.cfg.MODEL.DEVICE) for o in outputs]
-        logits = outputs[::3]
-        bbox_reg = outputs[1::3]
-        centerness = outputs[2::3]
+        num_outputs = len(outputs) // 3
+        logits = outputs[:num_outputs]
+        bbox_reg = outputs[num_outputs:2 * num_outputs]
+        centerness = outputs[2 * num_outputs:]
 
         locations = self.compute_locations(logits)
         boxes = self.postprocessing(locations, logits, bbox_reg, centerness, images.image_sizes)
