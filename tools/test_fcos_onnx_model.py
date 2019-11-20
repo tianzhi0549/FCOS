@@ -1,6 +1,8 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
-# Set up custom environment before nearly anything else is imported
-# NOTE: this should be the first import (no not reorder)
+"""
+An example:
+python tools/test_fcos_onnx_model.py --onnx-model fcos_imprv_R_50_FPN_1x.onnx --config-file configs/fcos/fcos_imprv_R_50_FPN_1x.yaml TEST.IMS_PER_BATCH 1 INPUT.MIN_SIZE_TEST 384 DATALOADER.NUM_WORKERS 0
+
+"""
 from fcos_core.utils.env import setup_environment  # noqa F401 isort:skip
 
 import argparse
@@ -84,7 +86,7 @@ def main():
     )
     parser.add_argument(
         "--onnx-model",
-        default="fcos.onnx",
+        default="fcos_imprv_R_50_FPN_1x.onnx",
         metavar="FILE",
         help="path to the onnx model",
     )
