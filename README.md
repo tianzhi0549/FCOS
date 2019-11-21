@@ -133,7 +133,7 @@ Note that:
 
 ## ONNX
 Please refer to the directory [onnx](onnx) for an example of exporting the model to ONNX.
-A converted model can be download [here](https://cloudstor.aarnet.edu.au/plus/s/38fQAdi2HBkn274/download).
+A converted model can be downloaded [here](https://cloudstor.aarnet.edu.au/plus/s/38fQAdi2HBkn274/download).
 We recommend you to use PyTorch >= 1.4.0 (or nightly) and torchvision >= 0.5.0 (or nightly) for ONNX models.
 
 ## Contributing to the project
