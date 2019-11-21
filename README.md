@@ -131,6 +131,11 @@ Note that:
 4) If you want to train FCOS on your own dataset, please follow this instruction [#54](https://github.com/tianzhi0549/FCOS/issues/54#issuecomment-497558687).
 5) Now, training with 8 GPUs and 4 GPUs can have the same performance. Previous performance gap was because we did not synchronize `num_pos` between GPUs when computing loss. 
 
+## ONNX
+Please refer to the directory [onnx](onnx) for an example of exporting the model to ONNX.
+A converted model can be download [here](https://cloudstor.aarnet.edu.au/plus/s/38fQAdi2HBkn274/download).
+We recommend you to use PyTorch >= 1.4.0 (or nightly) and torchvision >= 0.5.0 (or nightly) for ONNX models.
+
 ## Contributing to the project
 Any pull requests or issues are welcome.
 
