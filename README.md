@@ -9,6 +9,8 @@ This project hosts the code for implementing the FCOS algorithm for object detec
 
 The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv.org/abs/1904.01355). 
 
+Implementation based on Detectron2 is available at [https://tinyurl.com/AdelaiDet]
+
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
 - **Better performance:** The very simple one-stage detector achieves much better performance (38.7 vs. 36.8 in AP with ResNet-50) than Faster R-CNN. Check out more models and experimental results [here](#models).
