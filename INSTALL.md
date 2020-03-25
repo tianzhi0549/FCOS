@@ -2,7 +2,7 @@
 
 ### Requirements:
 - PyTorch >= 1.0. Installation instructions can be found in https://pytorch.org/get-started/locally/.
-- torchvision==0.2.1
+- torchvision
 - cocoapi
 - yacs
 - matplotlib
