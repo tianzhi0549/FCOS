@@ -9,7 +9,9 @@ This project hosts the code for implementing the FCOS algorithm for object detec
 
 The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv.org/abs/1904.01355). 
 
-Implementation based on Detectron2 is included in [AdelaiDet](https://tinyurl.com/AdelaiDet)
+Implementation based on Detectron2 is included in [AdelaiDet](https://tinyurl.com/AdelaiDet).
+
+**A real-time model with 46FPS and 40.3 in AP on COCO minival is also available there.**
 
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
