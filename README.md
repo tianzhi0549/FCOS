@@ -11,7 +11,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 
 Implementation based on Detectron2 is included in [AdelaiDet](https://tinyurl.com/AdelaiDet).
 
-**A real-time model with 46FPS and 40.3 in AP on COCO minival is also available [there](https://tinyurl.com/AdelaiDet#real-time-models).**
+**A real-time model with 46FPS and 40.3 in AP on COCO minival is also available [here](https://tinyurl.com/AdelaiDet#real-time-models).**
 
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
