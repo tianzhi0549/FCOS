@@ -11,7 +11,7 @@ The full paper is available at: [https://arxiv.org/abs/1904.01355](https://arxiv
 
 Implementation based on Detectron2 is included in [AdelaiDet](https://github.com/aim-uofa/AdelaiDet#coco-object-detecton-baselines-with-fcos).
 
-**A real-time model with 46FPS and 40.3 in AP on COCO minival is also available [here](https://tinyurl.com/AdelaiDet#fcos-real-time-models).**
+**A real-time model with 46FPS and 40.3 in AP on COCO minival is also available [here](https://github.com/aim-uofa/AdelaiDet/blob/master/configs/FCOS-Detection/README.md#fcos-real-time-models).**
 
 ## Highlights
 - **Totally anchor-free:**  FCOS completely avoids the complicated computation related to anchor boxes and all hyper-parameters of anchor boxes.   
