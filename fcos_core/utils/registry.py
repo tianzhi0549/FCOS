@@ -21,12 +21,12 @@ class Registry(dict):
         some_registry.register("foo_module", foo)
     2): used as decorator when declaring the module:
         @some_registry.register("foo_module")
-        @some_registry.register("foo_modeul_nickname")
+        @some_registry.register("foo_module_nickname")
         def foo():
             ...
 
     Access of module is just like using a dictionary, eg:
-        f = some_registry["foo_modeul"]
+        f = some_registry["foo_module"]
     '''
     def __init__(self, *args, **kwargs):
         super(Registry, self).__init__(*args, **kwargs)
