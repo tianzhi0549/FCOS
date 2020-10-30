@@ -20,6 +20,7 @@ Implementation based on Detectron2 is included in [AdelaiDet](https://github.com
 - **State-of-the-art performance:** Our best model based on ResNeXt-64x4d-101 and deformable convolutions achieves **49.0%** in AP on COCO test-dev (with multi-scale testing).
 
 ## Updates
+   - FCOS with Fast And Diverse (FAD) neural architecture search is avaliable at [FAD](https://github.com/MalongTech/research-fad). (30/10/2020)
    - Script for exporting [ONNX models](https://github.com/tianzhi0549/FCOS/tree/master/onnx). (21/11/2019)
    - New NMS (see [#165](https://github.com/tianzhi0549/FCOS/pull/165)) speeds up ResNe(x)t based models by up to 30% and MobileNet based models by 40%, with exactly the same performance. Check out [here](#models). (12/10/2019)
    - New models with much improved performance are released. The best model achieves **49%** in AP on COCO test-dev with multi-scale testing. (11/09/2019)
