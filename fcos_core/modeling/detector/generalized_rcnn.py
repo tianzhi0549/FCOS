@@ -11,6 +11,7 @@ from fcos_core.structures.image_list import to_image_list
 from ..backbone import build_backbone
 from ..rpn.rpn import build_rpn
 from ..roi_heads.roi_heads import build_roi_heads
+from ..dsc.DSC import DSC_Module
 
 
 class GeneralizedRCNN(nn.Module):
@@ -30,6 +31,10 @@ class GeneralizedRCNN(nn.Module):
         self.rpn = build_rpn(cfg, self.backbone.out_channels)
         self.roi_heads = build_roi_heads(cfg, self.backbone.out_channels)
 
+        # self.dsc=DSC_Module(256,256)
+        # self.catconv=nn.Conv2d(512,256,kernel_size=1,stride=1,padding=0)
+        # self.DDrelu = nn.ReLU(True)
+
     def forward(self, images, targets=None):
         """
         Arguments:
@@ -47,6 +52,29 @@ class GeneralizedRCNN(nn.Module):
             raise ValueError("In training mode, targets should be passed")
         images = to_image_list(images)
         features = self.backbone(images.tensors)
+
+        # if features[features != features].size(0) > 0:
+        #     print("原特征图也存在NAN")
+
+        # resultList=[]
+        # #下面是我自己添加的代码
+        # for feature_layer in features:
+        #         # print("feature :"+str(feature_layer.size()))
+        #         layerdsc=self.dsc(feature_layer.clone())
+        #         Ctemp=torch.cat((layerdsc,feature_layer),1)
+        #         layerdsc=self.catconv(Ctemp)
+        #         # print("layerdsc :" + str(layerdsc.size()))
+        #         layerdsc=self.DDrelu(layerdsc)
+        #         if feature_layer[feature_layer!=feature_layer].size(0)>0:
+        #             print("原特征图也存在NAN")
+        #
+        #         if layerdsc[layerdsc != layerdsc].size(0)>0:
+        #             print("存在NAN")
+        #         resultList.append(layerdsc)
+        #
+        # features=tuple(resultList)
+
+
         proposals, proposal_losses = self.rpn(images, features, targets)
         if self.roi_heads:
             x, result, detector_losses = self.roi_heads(features, proposals, targets)

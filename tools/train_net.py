@@ -26,6 +26,9 @@ from fcos_core.utils.imports import import_file
 from fcos_core.utils.logger import setup_logger
 from fcos_core.utils.miscellaneous import mkdir
 
+import warnings
+warnings.filterwarnings('ignore')
+
 
 def train(cfg, local_rank, distributed):
     model = build_detection_model(cfg)
@@ -53,12 +56,16 @@ def train(cfg, local_rank, distributed):
     output_dir = cfg.OUTPUT_DIR
 
     save_to_disk = get_rank() == 0
+
+    #断点定义，之后可以加载使用
     checkpointer = DetectronCheckpointer(
         cfg, model, optimizer, scheduler, output_dir, save_to_disk
     )
     extra_checkpoint_data = checkpointer.load(cfg.MODEL.WEIGHT)
     arguments.update(extra_checkpoint_data)
 
+
+    #加载数据集
     data_loader = make_data_loader(
         cfg,
         is_train=True,

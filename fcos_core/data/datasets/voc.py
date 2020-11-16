@@ -18,26 +18,9 @@ class PascalVOCDataset(torch.utils.data.Dataset):
 
     CLASSES = (
         "__background__ ",
-        "aeroplane",
-        "bicycle",
-        "bird",
-        "boat",
-        "bottle",
-        "bus",
-        "car",
-        "cat",
-        "chair",
-        "cow",
-        "diningtable",
-        "dog",
-        "horse",
-        "motorbike",
-        "person",
-        "pottedplant",
-        "sheep",
-        "sofa",
-        "train",
-        "tvmonitor",
+        "corpse",
+        "plane wreckage",
+        "shipwreck",
     )
 
     def __init__(self, data_dir, split, use_difficult=False, transforms=None):

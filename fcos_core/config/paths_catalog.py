@@ -1,4 +1,4 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
+          # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 """Centralized catalog of paths."""
 
 import os
@@ -52,7 +52,7 @@ class DatasetCatalog(object):
             "ann_file": "coco/annotations/person_keypoints_valminusminival2014.json",
         },
         "voc_2007_train": {
-            "data_dir": "voc/VOC2007",
+            "data_dir": "/home/lyp/Detector/VOC-Sonar",
             "split": "train"
         },
         "voc_2007_train_cocostyle": {
@@ -60,7 +60,7 @@ class DatasetCatalog(object):
             "ann_file": "voc/VOC2007/Annotations/pascal_train2007.json"
         },
         "voc_2007_val": {
-            "data_dir": "voc/VOC2007",
+            "data_dir": "/home/lyp/Detector/VOC-Sonar",
             "split": "val"
         },
         "voc_2007_val_cocostyle": {
@@ -68,7 +68,7 @@ class DatasetCatalog(object):
             "ann_file": "voc/VOC2007/Annotations/pascal_val2007.json"
         },
         "voc_2007_test": {
-            "data_dir": "voc/VOC2007",
+            "data_dir": "/home/lyp/Detector/VOC-Sonar",
             "split": "test"
         },
         "voc_2007_test_cocostyle": {
