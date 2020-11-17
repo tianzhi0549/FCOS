@@ -61,7 +61,7 @@ def build_roi_heads(cfg, in_channels):
     roi_heads = []
     if cfg.MODEL.RETINANET_ON:
         return []
-
+    #using
     if not cfg.MODEL.RPN_ONLY:
         roi_heads.append(("box", build_roi_box_head(cfg, in_channels)))
     if cfg.MODEL.MASK_ON:
