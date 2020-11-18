@@ -12,6 +12,7 @@ from ..backbone import build_backbone
 from ..rpn.rpn import build_rpn
 from ..roi_heads.roi_heads import build_roi_heads
 from ..dsc.DSC import DSC_Module
+from ..fs_enhancement.fs_fusion import generateSceneFeatureMap as getScene
 
 
 class GeneralizedRCNN(nn.Module):
@@ -30,6 +31,8 @@ class GeneralizedRCNN(nn.Module):
         self.backbone = build_backbone(cfg)
         self.rpn = build_rpn(cfg, self.backbone.out_channels)
         self.roi_heads = build_roi_heads(cfg, self.backbone.out_channels)
+
+        self.enhance=getScene()
 
 
 
@@ -50,6 +53,9 @@ class GeneralizedRCNN(nn.Module):
             raise ValueError("In training mode, targets should be passed")
         images = to_image_list(images)
         features = self.backbone(images.tensors)
+
+        # 后来加的
+        features=self.enhance(features)
 
 
         proposals, proposal_losses = self.rpn(images, features, targets)
