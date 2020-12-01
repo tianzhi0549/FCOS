@@ -14,6 +14,8 @@ from ..roi_heads.roi_heads import build_roi_heads
 from ..dsc.DSC import DSC_Module
 from ..fs_enhancement.fs_fusion import generateSceneFeatureMap as getScene
 
+from fcos_core.modeling.dsc.dscFeature import dscFeature
+
 
 class GeneralizedRCNN(nn.Module):
     """
@@ -33,6 +35,10 @@ class GeneralizedRCNN(nn.Module):
         self.roi_heads = build_roi_heads(cfg, self.backbone.out_channels)
 
         self.enhance=getScene()
+
+        self.dsc=dscFeature()
+        self.catDscEnhance = nn.Conv2d(512, 256, kernel_size=1, stride=1, padding=0)
+        self.Backrelu = nn.ReLU(True)
 
 
 
@@ -54,8 +60,21 @@ class GeneralizedRCNN(nn.Module):
         images = to_image_list(images)
         features = self.backbone(images.tensors)
 
+        featureAdd=features
+        featureAdd=self.dsc(featureAdd)
+
+
         # 后来加的
         features=self.enhance(features)
+
+        featureList=[]
+        for x,y in zip(features,featureAdd):
+            temp=torch.cat((x,y),1)
+            temp=self.catDscEnhance(temp)
+            temp=self.Backrelu(temp)
+            featureList.append(temp)
+
+        features=tuple(featureList)
 
 
         proposals, proposal_losses = self.rpn(images, features, targets)

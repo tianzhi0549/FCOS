@@ -1,10 +1,13 @@
 import torch
 import math
+import os
 import cupy
 from torch import nn
 import torch.nn.functional as F
 class Stream:
 	ptr = torch.cuda.current_stream().cuda_stream
+
+print("irnn.py 当前工作路径："+str(os.getcwd()))
 
 IRNNForward = open('fcos_core/modeling/dsc/IRNN_Forward_cuda.cu','r').read()
 

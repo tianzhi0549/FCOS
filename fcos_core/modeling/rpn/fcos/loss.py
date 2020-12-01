@@ -100,6 +100,8 @@ class FCOSLossComputation(object):
         return inside_gt_bbox_mask
 
     def prepare_targets(self, points, targets):
+
+        # 每一层特征图对应的检测box比例大小
         object_sizes_of_interest = [
             [-1, 64],
             [64, 128],
@@ -114,11 +116,16 @@ class FCOSLossComputation(object):
             expanded_object_sizes_of_interest.append(
                 object_sizes_of_interest_per_level[None].expand(len(points_per_level), -1)
             )
-
+        #在行的维度上concat
         expanded_object_sizes_of_interest = torch.cat(expanded_object_sizes_of_interest, dim=0)
+
+        #每层特征图的点的数量
         num_points_per_level = [len(points_per_level) for points_per_level in points]
         self.num_points_per_level = num_points_per_level
         points_all_level = torch.cat(points, dim=0)
+
+        #论文中分配box策略
+        #根据预设比例对不同level特征图分配不同大小的box
         labels, reg_targets = self.compute_targets_for_locations(
             points_all_level, targets, expanded_object_sizes_of_interest
         )
@@ -129,7 +136,11 @@ class FCOSLossComputation(object):
 
         labels_level_first = []
         reg_targets_level_first = []
+
+        #将多个图片同一level的label和reg_targets合并成一个tensor
         for level in range(len(points)):
+            #对一个batch内所有图片的所有point 在行的维度上进行concat
+            #后面追加到labels_level_first
             labels_level_first.append(
                 torch.cat([labels_per_im[level] for labels_per_im in labels], dim=0)
             )
@@ -142,7 +153,8 @@ class FCOSLossComputation(object):
             if self.norm_reg_targets:
                 reg_targets_per_level = reg_targets_per_level / self.fpn_strides[level]
             reg_targets_level_first.append(reg_targets_per_level)
-
+            #labels_level_first: 一个batch下所有图片同一level下的label
+            #reg_targets_level_first: 一个batch下所有图片同一level下的box坐标
         return labels_level_first, reg_targets_level_first
 
     def compute_targets_for_locations(self, locations, targets, object_sizes_of_interest):
@@ -228,6 +240,8 @@ class FCOSLossComputation(object):
         centerness_flatten = []
         labels_flatten = []
         reg_targets_flatten = []
+
+        #对每个特征层 预测box、cls 和 真实框box、cls进行reshape
         for l in range(len(labels)):
             box_cls_flatten.append(box_cls[l].permute(0, 2, 3, 1).reshape(-1, num_classes))
             box_regression_flatten.append(box_regression[l].permute(0, 2, 3, 1).reshape(-1, 4))
@@ -241,8 +255,10 @@ class FCOSLossComputation(object):
         labels_flatten = torch.cat(labels_flatten, dim=0)
         reg_targets_flatten = torch.cat(reg_targets_flatten, dim=0)
 
+        #提取有类别的特征图中点
         pos_inds = torch.nonzero(labels_flatten > 0).squeeze(1)
 
+        #根据pos_inds提取正样本
         box_regression_flatten = box_regression_flatten[pos_inds]
         reg_targets_flatten = reg_targets_flatten[pos_inds]
         centerness_flatten = centerness_flatten[pos_inds]
@@ -252,12 +268,14 @@ class FCOSLossComputation(object):
         total_num_pos = reduce_sum(pos_inds.new_tensor([pos_inds.numel()])).item()
         num_pos_avg_per_gpu = max(total_num_pos / float(num_gpus), 1.0)
 
+        #分类loss: SigmoidFocalLoss
         cls_loss = self.cls_loss_func(
             box_cls_flatten,
             labels_flatten.int()
         ) / num_pos_avg_per_gpu
 
         if pos_inds.numel() > 0:
+            #计算target的centerness
             centerness_targets = self.compute_centerness_targets(reg_targets_flatten)
 
             # average sum_centerness_targets from all gpus,
@@ -265,16 +283,20 @@ class FCOSLossComputation(object):
             sum_centerness_targets_avg_per_gpu = \
                 reduce_sum(centerness_targets.sum()).item() / float(num_gpus)
 
+            #计算box坐标的loss
             reg_loss = self.box_reg_loss_func(
                 box_regression_flatten,
                 reg_targets_flatten,
                 centerness_targets
             ) / sum_centerness_targets_avg_per_gpu
+
+            #计算centernes loss
             centerness_loss = self.centerness_loss_func(
                 centerness_flatten,
                 centerness_targets
             ) / num_pos_avg_per_gpu
         else:
+            #如果图片没有loss
             reg_loss = box_regression_flatten.sum()
             reduce_sum(centerness_flatten.new_tensor([0.0]))
             centerness_loss = centerness_flatten.sum()
