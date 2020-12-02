@@ -60,21 +60,20 @@ class GeneralizedRCNN(nn.Module):
         images = to_image_list(images)
         features = self.backbone(images.tensors)
 
-        featureAdd=features
-        featureAdd=self.dsc(featureAdd)
+        features=self.dsc(features)
 
 
         # 后来加的
-        features=self.enhance(features)
-
-        featureList=[]
-        for x,y in zip(features,featureAdd):
-            temp=torch.cat((x,y),1)
-            temp=self.catDscEnhance(temp)
-            temp=self.Backrelu(temp)
-            featureList.append(temp)
-
-        features=tuple(featureList)
+        # features=self.enhance(features)
+        #
+        # featureList=[]
+        # for x,y in zip(features,featureAdd):
+        #     temp=torch.cat((x,y),1)
+        #     temp=self.catDscEnhance(temp)
+        #     temp=self.Backrelu(temp)
+        #     featureList.append(temp)
+        #
+        # features=tuple(featureList)
 
 
         proposals, proposal_losses = self.rpn(images, features, targets)
