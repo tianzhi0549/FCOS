@@ -1,0 +1,40 @@
+import torch
+from torch import nn
+from fcos_core.modeling.dsc.dscFeature import dscFeature
+from fcos_core.modeling.fs_enhancement.fs_fusion import generateSceneFeatureMap as getScene
+from fcos_core.modeling.fs_enhancement.asff import ASFF
+
+
+class featureInhanceHead(nn.Module):
+    def __init__(self):
+        super(featureInhanceHead, self).__init__()
+
+        self.enhance=getScene()
+
+        self.dsc=dscFeature()
+        self.catDscEnhance=nn.Conv2d(512,256,kernel_size=1,stride=1,padding=0)
+        self.BackRelu=nn.ReLU(True)
+
+        self.asff=ASFF()
+
+    def forward(self,features):
+        feature_DSC=self.dsc(features)
+        feature_RFB=self.enhance(features)
+
+        featureList=[]
+
+        for x,y,z in zip(feature_DSC,feature_RFB,features):
+            # temp=torch.cat((x,y),1)
+            # temp=self.catDscEnhance(temp)
+            # temp=self.BackRelu(temp)
+
+            temp=self.asff(x,y,z)
+            featureList.append(temp)
+
+        features=tuple(featureList)
+        return features
+
+def build_feature_enchance():
+
+    model=featureInhanceHead()
+    return model
