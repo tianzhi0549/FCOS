@@ -21,6 +21,13 @@ class ASFF(nn.Module):
             compress_c * 3, 3, kernel_size=1, stride=1, padding=0)
         self.vis = vis
 
+        #参数初始化
+        for modules in [self.weight_level_0, self.weight_level_1,
+                        self.weight_level_2, self.weight_levels]:
+            for l in modules.modules():
+                if isinstance(l, nn.Conv2d):
+                    torch.nn.init.normal_(l.weight, std=0.01)
+
     def forward(self, x_level_0, x_level_1, x_level_2):
         # import ipdb
         # ipdb.set_trace()

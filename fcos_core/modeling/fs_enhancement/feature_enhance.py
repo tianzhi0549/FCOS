@@ -17,6 +17,13 @@ class featureInhanceHead(nn.Module):
 
         self.asff=ASFF()
 
+        # for modules in [self.enhance, self.dsc,
+        #                 self.catDscEnhance, self.asff]:
+        #     for l in modules.modules():
+        #         if isinstance(l, nn.Conv2d):
+        #             torch.nn.init.normal_(l.weight, std=0.01)
+        #             torch.nn.init.constant_(l.bias, 0)
+
     def forward(self,features):
         feature_DSC=self.dsc(features)
         feature_RFB=self.enhance(features)
