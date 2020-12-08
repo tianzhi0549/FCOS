@@ -38,11 +38,21 @@ class generateSceneFeatureMap(nn.Module):
         P5_4=torch.cat((p5,p4),dim=1)
         P5RF=self.p5_rf(P5_4)
 
-        SceneMap=torch.cat((P5RF,self.downSample(P4RF),self.downSample(self.downSample(P3RF))),dim=1)
+        featureList=[]
+        featureList.append(P3RF)
+        featureList.append(P4RF)
+        featureList.append(P5RF)
+        featureList.append(x[3])
+        featureList.append(x[4])
 
-        result=self.fusion(SceneMap)
+        featureList=tuple(featureList)
 
-        return result
+        return  featureList
+
+
+        # SceneMap=torch.cat((P5RF,self.downSample(P4RF),self.downSample(self.downSample(P3RF))),dim=1)
+        # result=self.fusion(SceneMap)
+        # return result
 
 
 

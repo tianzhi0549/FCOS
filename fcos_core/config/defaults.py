@@ -52,7 +52,8 @@ _C.INPUT.MIN_SIZE_TEST = 800
 # Maximum size of the side of the image during testing
 _C.INPUT.MAX_SIZE_TEST = 1333
 # Values to be used for image normalization
-_C.INPUT.PIXEL_MEAN = [102.9801, 115.9465, 122.7717]
+# _C.INPUT.PIXEL_MEAN = [102.9801, 115.9465, 122.7717]
+_C.INPUT.PIXEL_MEAN = [115.11156, 71.203489, 19.695658]
 # Values to be used for image normalization
 _C.INPUT.PIXEL_STD = [1., 1., 1.]
 # Convert image to BGR format (for Caffe2 models), in range 0-255
