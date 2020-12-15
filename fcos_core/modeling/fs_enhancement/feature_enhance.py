@@ -3,6 +3,7 @@ from torch import nn
 from fcos_core.modeling.dsc.dscFeature import dscFeature
 from fcos_core.modeling.fs_enhancement.fs_fusion import generateSceneFeatureMap as getScene
 from fcos_core.modeling.fs_enhancement.asff import ASFF
+from fcos_core.modeling.fs_enhancement.cbam import BasicBlock
 
 
 class featureInhanceHead(nn.Module):
@@ -16,6 +17,8 @@ class featureInhanceHead(nn.Module):
         self.BackRelu=nn.ReLU(True)
 
         self.asff=ASFF()
+
+        self.cbam=BasicBlock(256,256)
 
         # for modules in [self.enhance, self.dsc,
         #                 self.catDscEnhance, self.asff]:
@@ -35,7 +38,9 @@ class featureInhanceHead(nn.Module):
             # temp=self.catDscEnhance(temp)
             # temp=self.BackRelu(temp)
 
-            temp=self.asff(x,y,z)
+            temp1=self.cbam(x)
+            temp=self.asff(temp1,y,z)
+            # temp=self.cbam(temp)
             featureList.append(temp)
 
         features=tuple(featureList)
