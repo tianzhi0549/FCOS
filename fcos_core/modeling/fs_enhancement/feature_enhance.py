@@ -2,6 +2,7 @@ import torch
 from torch import nn
 from fcos_core.modeling.dsc.dscFeature import dscFeature
 from fcos_core.modeling.fs_enhancement.fs_fusion import generateSceneFeatureMap as getScene
+# from fcos_core.modeling.fs_enhancement.fs import generateSceneFeatureMap as getScene
 from fcos_core.modeling.fs_enhancement.asff import ASFF
 from fcos_core.modeling.fs_enhancement.cbam import BasicBlock
 
@@ -38,10 +39,10 @@ class featureInhanceHead(nn.Module):
             # temp=self.catDscEnhance(temp)
             # temp=self.BackRelu(temp)
 
-            temp1=self.cbam(x)
-            temp=self.asff(temp1,y,z)
+
+            # temp=self.asff(x,y,z)
             # temp=self.cbam(temp)
-            featureList.append(temp)
+            featureList.append(y)
 
         features=tuple(featureList)
         return features
