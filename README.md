@@ -155,6 +155,15 @@ Please consider citing our paper in your publications if the project helps your 
   year    =  {2019}
 }
 ```
+```
+@article{tian2021fcos,
+  title   =  {{FCOS}: A Simple and Strong Anchor-free Object Detector},
+  author  =  {Tian, Zhi and Shen, Chunhua and Chen, Hao and He, Tong},
+  booktitle =  {IEEE T. Pattern Analysis and Machine Intelligence (TPAMI)},
+  year    =  {2021}
+}
+```
+
 
 # Acknowledgments
 We would like to thank [@yqyao](https://github.com/yqyao) for the tricks of center sampling and GIoU.  We also thank [@bearcatt](https://github.com/bearcatt) for his suggestion of positioning the center-ness branch with box regression (refer to [#89](https://github.com/tianzhi0549/FCOS/issues/89#issuecomment-516877042)).    
