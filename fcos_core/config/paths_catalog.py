@@ -107,7 +107,37 @@ class DatasetCatalog(object):
         "cityscapes_fine_instanceonly_seg_test_cocostyle": {
             "img_dir": "cityscapes/images",
             "ann_file": "cityscapes/annotations/instancesonly_filtered_gtFine_test.json"
+        },
+
+        "voc_Sonar_train": {
+            "data_dir": "/home/lyp/Detector/VOC-0103",
+            "split": "SonarTrain"
+        },
+        "voc_Sonar_val": {
+            "data_dir": "/home/lyp/Detector/VOC-0103",
+            "split": "val"
+        },
+        "voc_Sonar_test": {
+            "data_dir": "/home/lyp/Detector/VOC-0103",
+            "split": "test"
+        },
+        "voc_Rotate_train": {
+            "data_dir": "/home/lyp/Detector/VOC-0104",
+            "split": "train"
+        },
+        "voc_Rotate_val": {
+            "data_dir": "/home/lyp/Detector/VOC-0104",
+            "split": "val"
+        },
+        "voc_Rotate_test": {
+            "data_dir": "/home/lyp/Detector/VOC-0104",
+            "split": "test"
+        },
+        "voc_all_train": {
+            "data_dir": "/home/lyp/Detector/VOC-0105",
+            "split": "train"
         }
+
     }
 
     @staticmethod

@@ -2,8 +2,9 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from collections import OrderedDict
+import numpy as np
 
-from ..dsc.irnn import irnn
+from fcos_core.modeling.dsc.irnn import irnn
 
 def conv1x1(in_channels, out_channels, stride = 1):
     return nn.Conv2d(in_channels,out_channels,kernel_size = 1,
@@ -61,11 +62,6 @@ class DSC_Module(nn.Module):
         self.attention = attention
         if self.attention:
             self.attention_layer = Attention(in_channels)
-
-
-
-
-
 
     def forward(self,x):
         if self.attention:
@@ -134,3 +130,17 @@ class Predict(nn.Module):
 #                     # torch.nn.init.constant_(l.bias, 0)
 
  
+if __name__=='__main__':
+    model=DSC_Module(256,256).double()
+    model=model.cuda()
+
+    feature1=np.random.rand(5,256,25,25)
+    feature1=torch.from_numpy(feature1)
+    feature2 = np.random.rand(5, 256, 25, 25)
+    feature2 = torch.from_numpy(feature2)
+    feature3 = np.random.rand(5, 256, 25, 25)
+    feature3 = torch.from_numpy(feature3)
+
+    result=model(feature3.cuda())
+
+    print(result.size())

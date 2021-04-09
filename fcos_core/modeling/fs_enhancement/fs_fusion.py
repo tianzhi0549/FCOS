@@ -92,6 +92,7 @@ class fsFusion(nn.Module):
         self.upsample_2 = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         self.upsample_4 = nn.Upsample(scale_factor=4, mode='bilinear', align_corners=True)
         self.downSample = nn.MaxPool2d(2, stride=2,padding=1)
+        self.downSample_2=nn.MaxPool2d(4,stride=4,padding=1)
 
 
     def forward(self,scene,x):
@@ -99,7 +100,7 @@ class fsFusion(nn.Module):
         p4_scene=self.scene_P4(self.upsample_2(scene))
         p5_scene=self.scene_P5(scene)
         p6_scene=self.scene_P6(self.downSample(scene))
-        p7_scene=self.scene_P7(self.downSample(self.downSample(scene)))
+        p7_scene=self.scene_P7(self.downSample_2(scene))
 
         p3 = x[0]
         p4 = x[1]
@@ -155,7 +156,7 @@ class fsFusion(nn.Module):
 
 if __name__=='__main__':
     features=[]
-    featureSize=[100,50,25,13,7]
+    featureSize=[76,38,19,10,5]
     for i in featureSize:
         feature=np.random.rand(5,256,i,i)
         feature=torch.from_numpy(feature)

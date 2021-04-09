@@ -11,7 +11,11 @@ class ASFF(nn.Module):
         self.inter_dim = 256
         self.expand=add_conv(self.inter_dim, 256, 3, 1)
         # when adding rfb, we use half number of channels to save memory
-        compress_c = 8 if rfb else 16
+        compress_c = 8 if rfb else 256
+        # compress_c = 8 if rfb else 32
+
+
+
 
         self.weight_level_0 = add_conv(self.inter_dim, compress_c, 1, 1)
         self.weight_level_1 = add_conv(self.inter_dim, compress_c, 1, 1)
@@ -20,6 +24,7 @@ class ASFF(nn.Module):
         self.weight_levels = nn.Conv2d(
             compress_c * 3, 3, kernel_size=1, stride=1, padding=0)
         self.vis = vis
+        self.BackRelu=nn.ReLU(True)
 
         #参数初始化
         for modules in [self.weight_level_0, self.weight_level_1,
@@ -48,6 +53,8 @@ class ASFF(nn.Module):
             level_2_resized * levels_weight[:, 2:, :, :]
 
         out = self.expand(fused_out_reduced)
+        # add relu function
+        out=self.BackRelu(out)
 
         if self.vis:
             return out, levels_weight, fused_out_reduced.sum(dim=1)

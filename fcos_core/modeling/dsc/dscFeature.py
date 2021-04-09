@@ -1,4 +1,5 @@
-from fcos_core.modeling.dsc.DSC import DSC_Module
+# from fcos_core.modeling.dsc.DSC import DSC_Module
+from fcos_core.modeling.dsc.dscTest import DSC_Module
 from torch import nn
 import torch
 
