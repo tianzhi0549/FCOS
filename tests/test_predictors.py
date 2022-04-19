@@ -3,7 +3,7 @@
 import unittest
 import copy
 import torch
-# import modules to to register predictors
+# import modules to register predictors
 from fcos_core.modeling.backbone import build_backbone # NoQA
 from fcos_core.modeling.roi_heads.roi_heads import build_roi_heads # NoQA
 from fcos_core.modeling import registry
