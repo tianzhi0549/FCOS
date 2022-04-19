@@ -3,7 +3,7 @@
 import unittest
 import copy
 import torch
-# import modules to to register rpn heads
+# import modules to register rpn heads
 from fcos_core.modeling.backbone import build_backbone # NoQA
 from fcos_core.modeling.rpn.rpn import build_rpn # NoQA
 from fcos_core.modeling import registry

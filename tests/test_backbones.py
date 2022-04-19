@@ -3,7 +3,7 @@
 import unittest
 import copy
 import torch
-# import modules to to register backbones
+# import modules to register backbones
 from fcos_core.modeling.backbone import build_backbone # NoQA
 from fcos_core.modeling import registry
 from fcos_core.config import cfg as g_cfg
