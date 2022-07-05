@@ -1,5 +1,5 @@
 // Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
-#include "cpu/vision.h"
+#include "vision.h"
 
 // implementation taken from Caffe2
 template <typename T>
