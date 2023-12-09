@@ -10,7 +10,7 @@ from fcos_core.structures.bounding_box import BoxList
 
 _MODEL_NAMES_TO_INFO_ = {
     "fcos_R_50_FPN_1x": {
-        "url": "https://cloudstor.aarnet.edu.au/plus/s/dDeDPBLEAt19Xrl/download#fcos_R_50_FPN_1x.pth",
+        "url": "https://huggingface.co/tianzhi/FCOS/resolve/main/FCOS_R_50_FPN_1x.pth?download=true#fcos_R_50_FPN_1x.pth",
         "best_min_confidence": [
             0.49211737513542175, 0.49340692162513733, 0.510103702545166,
             0.4707475006580353, 0.5197340250015259, 0.5007652044296265,
@@ -42,7 +42,7 @@ _MODEL_NAMES_TO_INFO_ = {
         ]
     },
     "fcos_syncbn_bs32_c128_MNV2_FPN_1x": {
-        "url": "https://cloudstor.aarnet.edu.au/plus/s/3GKwaxZhDSOlCZ0/download#fcos_syncbn_bs32_c128_MNV2_FPN_1x.pth",
+        "url": "https://huggingface.co/tianzhi/FCOS/resolve/main/FCOS_syncbn_bs32_c128_MNV2_FPN_1x.pth?download=true#fcos_syncbn_bs32_c128_MNV2_FPN_1x.pth",
         "best_min_confidence": [
             0.47482219338417053, 0.46463844180107117, 0.4777076840400696,
             0.47399088740348816, 0.5125738978385925, 0.509827196598053,
