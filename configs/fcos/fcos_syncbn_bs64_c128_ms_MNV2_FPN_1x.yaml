@@ -1,6 +1,6 @@
 MODEL:
   META_ARCHITECTURE: "GeneralizedRCNN"
-  WEIGHT: "https://cloudstor.aarnet.edu.au/plus/s/xtixKaxLWmbcyf7/download#mobilenet_v2-ecbe2b5.pth"
+  WEIGHT: "https://huggingface.co/tianzhi/FCOS/resolve/main/mobilenet_v2-ecbe2b5.pth?download=true#mobilenet_v2-ecbe2b5.pth"
   RPN_ONLY: True
   FCOS_ON: True
   BACKBONE:
