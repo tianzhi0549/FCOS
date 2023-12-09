@@ -56,7 +56,7 @@ Once the installation is done, you can follow the below steps to run a quick dem
     
     # assume that you are under the root directory of this project,
     # and you have activated your virtual environment if needed.
-    wget https://cloudstor.aarnet.edu.au/plus/s/ZSAqNJB96hA71Yf/download -O FCOS_imprv_R_50_FPN_1x.pth
+    wget https://huggingface.co/tianzhi/FCOS/resolve/main/FCOS_imprv_R_50_FPN_1x.pth?download=true -O FCOS_imprv_R_50_FPN_1x.pth
     python demo/fcos_demo.py
 
 
